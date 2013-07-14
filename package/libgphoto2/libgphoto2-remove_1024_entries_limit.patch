@@ -1,0 +1,50 @@
+--- libgphoto2-2.4.9.1.orig/libgphoto2/gphoto2-list.c	2010-06-18 17:21:40.000000000 +0200
++++ libgphoto2-2.4.9.1/libgphoto2/gphoto2-list.c	2010-06-18 17:21:45.000000000 +0200
+@@ -76,10 +76,11 @@
+ #define MAX_LIST_STRING_LENGTH 128
+ struct _CameraList {
+ 	int  count;
++	int length;
+ 	struct {
+ 		char name  [MAX_LIST_STRING_LENGTH];
+ 		char value [MAX_LIST_STRING_LENGTH];
+-	} entry [MAX_ENTRIES];
++	} *entry;
+ 	int ref_count;
+ };
+ 
+@@ -184,6 +185,8 @@
+ 	 */
+ 	list->ref_count = 0;
+ 	
++	free (list->entry);
++
+ 	free (list);
+ 
+         return (GP_OK);
+@@ -220,12 +223,25 @@
+ {
+ 	CHECK_LIST (list);
+ 
++	if (list->count == list->length) {
++		list->entry = realloc(list->entry, (list->length + MAX_ENTRIES) * sizeof(*(list->entry)));
++		if (!list->entry) {
++			gp_log (GP_LOG_ERROR, "gphoto2-list", "gp_list_append: "
++			"Tried to add more than %d entries to the list, reporting error.",
++			MAX_ENTRIES);
++			return (GP_ERROR_FIXED_LIMIT_EXCEEDED);
++		}
++		list->length += MAX_ENTRIES;
++	}
++
++#if 0
+ 	if (list->count == MAX_ENTRIES) {
+ 		gp_log (GP_LOG_ERROR, "gphoto2-list", "gp_list_append: "
+ 		"Tried to add more than %d entries to the list, reporting error.",
+ 		MAX_ENTRIES);
+ 		return (GP_ERROR_FIXED_LIMIT_EXCEEDED);
+ 	}
++#endif
+ 
+ 	if (name) {
+ 		/* check that the 'name' value fits */

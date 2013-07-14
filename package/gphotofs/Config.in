@@ -1,0 +1,6 @@
+config BR2_PACKAGE_GPHOTOFS
+	bool "gphotofs"
+	default n
+	select BR2_PACKAGE_LIBGPHOTO2
+	help
+	  FUSE based filesystem for gphoto2.

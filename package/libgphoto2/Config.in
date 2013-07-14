@@ -1,0 +1,7 @@
+config BR2_PACKAGE_LIBGPHOTO2
+	bool "libgphoto2"
+	default n
+	select BR2_PACKAGE_LIBUSB
+	help
+	  libgphoto2 is a library that can be used by applications to access various 
+	  digital cameras.  
