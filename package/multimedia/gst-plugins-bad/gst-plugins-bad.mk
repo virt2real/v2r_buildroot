@@ -577,4 +577,10 @@ else
 GST_PLUGINS_BAD_CONF_OPT += --disable-vcd
 endif
 
+ifeq ($(BR2_PACKAGE_GST_PLUGINS_BAD_PLUGIN_RTMP),y)
+GST_PLUGINS_BAD_CONF_OPT += --enable-rtmp
+else
+GST_PLUGINS_BAD_CONF_OPT += --disable-rtmp
+endif
+
 $(eval $(autotools-package))
