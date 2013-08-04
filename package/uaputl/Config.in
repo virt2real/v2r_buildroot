@@ -1,0 +1,4 @@
+config BR2_PACKAGE_UAPUTL
+	bool "uaputl"
+	help
+	  Marvel uaputl for configuring WLAN chipset in master mode.

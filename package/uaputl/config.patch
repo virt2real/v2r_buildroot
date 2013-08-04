@@ -1,0 +1,108 @@
+diff -rup uaputil-HEAD.orig/config/uaputl.conf uaputil-HEAD/config/uaputl.conf
+--- uaputil-HEAD.orig/config/uaputl.conf	2012-07-20 08:27:17.000000000 +0200
++++ uaputil-HEAD/config/uaputl.conf	2013-08-04 14:06:24.000000000 +0200
+@@ -2,10 +2,10 @@
+ 
+ 
+ ap_config={
+-    SSID="Marvell Micro AP"         # SSID of Micro AP
++    SSID="Virt2Real AP"             # SSID of Micro AP
+     BeaconPeriod=100                # Beacon period in TU
+     Channel=6                       # Radio Channel	6
+-#   Channel=0,1                     # auto channel select (MCS mode)
++    Channel=0,1                     # auto channel select (MCS mode)
+     ChanList=1,6,11                 # Scan channel list 
+ #   AP_MAC=00:34:22:77:46:41        # MAC address of AP
+     RxAntenna=0                     # 0 for Antenna A
+@@ -36,10 +36,10 @@ ap_config={
+                                     # in units of 100ms
+     MaxStaNum=8                     # Max number of stations allowed to connect	
+     Retrylimit=7                    # Retry limit to use for packet transmissions
+-    AuthMode=0                      # 0:Open authentication
++    AuthMode=1                      # 0:Open authentication
+                                     # 1:shared key authentication
+                                     # 2: Static WEP
+-    Protocol=1                      # protocol to use
++    Protocol=32                     # protocol to use
+                                     # 1: No security  	2: Static WEP
+                                     # 8: WPA	32: WPA2    40:WPA2 Mixed Mode
+     RSNReplayProtection=0           # RSN replay protection 0: disabled, 1: enabled
+@@ -55,19 +55,19 @@ ap_config={
+ 
+ # **** WPA/WPA2 PSK setting******
+     
+-#    PairwiseCipher=4               # Pairwise cipher type
++     PairwiseCipher=4               # Pairwise cipher type
+                                     # 0: None
+                                     # 4: TKIP	  8: AES CCMP
+                                     # 12: AES CCMP + TKIP
+-#    GroupCipher=4                  # group cipher type
++     GroupCipher=4                  # group cipher type
+                                     # 0: None
+                                     # 4: TKIP	  8: AES CCMP
+-#    PSK="1234567890"               # WPA/WPA2 passphrase 	
++     PSK="1234567890"               # WPA/WPA2 passphrase 	
+      GroupRekeyTime= 86400          # Group key re-key interval, in second.
+                                     # 0 mean never re-key
+                                     #802.11D specific configuration
+     11d_enable=0                    # 0-disable 1-enable
+-#   country=US                      # country information
++    country=RU                      # country information
+ }
+ 
+ 
+diff -rup uaputil-HEAD.orig/Makefile uaputil-HEAD/Makefile
+--- uaputil-HEAD.orig/Makefile	2012-07-20 08:27:17.000000000 +0200
++++ uaputil-HEAD/Makefile	2013-08-04 14:08:53.000000000 +0200
+@@ -3,39 +3,22 @@
+ # Copyright (C) 2008, Marvell International Ltd.
+ # All Rights Reserved
+  
+-# Path to the top directory of the wlan distribution
+-PATH_TO_TOP = ../..
+-
+-# Determine how we should copy things to the install directory
+-ABSPATH := $(filter /%, $(INSTALLDIR))
+-RELPATH := $(filter-out /%, $(INSTALLDIR))
+-INSTALLPATH := $(ABSPATH)
+-ifeq ($(strip $(INSTALLPATH)),)
+-INSTALLPATH := $(PATH_TO_TOP)/$(RELPATH)
+-endif
+-
+ # Override CFLAGS for application sources, remove __ kernel namespace defines
+ CFLAGS := $(filter-out -D__%, $(EXTRA_CFLAGS))
+ 
+-
+ #CFLAGS += -DAP22 -fshort-enums
+ CFLAGS += -Wall
+ #ECHO = @
+ LIBS = -lrt
+ 
+-.PHONY: default tags all
++.PHONY: all
+ 
+ OBJECTS = uaputl.o uapcmd.o
+ HEADERS = uaputl.h uapcmd.h
+ 
+ TARGET = uaputl
+ 
+-build default: $(TARGET)
+-	@cp -f $(TARGET) $(INSTALLPATH)
+-	@cp -rf config/* $(INSTALLPATH)
+-
+-
+-all : tags default
++all : $(TARGET)
+ 
+ $(TARGET): $(OBJECTS) $(HEADERS)
+ 	$(ECHO)$(CC) $(LIBS) -o $@ $(OBJECTS)
+@@ -43,9 +26,6 @@ $(TARGET): $(OBJECTS) $(HEADERS)
+ %.o: %.c $(HEADERS)
+ 	$(ECHO)$(CC) $(CFLAGS) -c -o $@ $<
+ 
+-tags:
+-	ctags -R -f tags.txt
+-
+ clean:
+ 	$(ECHO)$(RM) $(OBJECTS) $(TARGET)
+ 	$(ECHO)$(RM) tags.txt 
