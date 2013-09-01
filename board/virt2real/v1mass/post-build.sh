@@ -8,8 +8,8 @@ BOARDDIR=board/virt2real/v1mass
 sed -i 's%root::%root:8kfIfYHmcyQEE:%' $TARGETDIR/etc/shadow
 
 # Remove bad files
-sudo rm $TARGETDIR/etc/resolv.conf
-sudo rm $TARGETDIR/etc/init.d/S01logging
+rm $TARGETDIR/etc/resolv.conf
+rm $TARGETDIR/etc/init.d/S01logging
 
 # Copy the rootfs additions
-sudo cp -r $BOARDDIR/rootfs-additions/* $TARGETDIR/
+cp -r $BOARDDIR/rootfs-additions/* $TARGETDIR/
