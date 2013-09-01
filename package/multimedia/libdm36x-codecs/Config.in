@@ -1,0 +1,8 @@
+config BR2_PACKAGE_LIBDM36X_CODECS
+	bool "libdm36x-codecs"
+	help
+	  Library for TI's DM365 SoC Codecs by RidgeRun
+	  
+	  This library builds a autotools (and Linux in general) friendly version of the
+	  codecs for the dm36x SoC family. This greatly simplifies the process of building
+	  apps that require from APIs related to CodecEngine.

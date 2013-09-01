@@ -1,0 +1,13 @@
+config BR2_PACKAGE_GST1_CE_PLUGIN
+	bool "gst1-ce-plugin"
+	depends on BR2_PACKAGE_GSTREAMER1
+	select BR2_PACKAGE_GST1_PLUGINS_BASE
+	select BR2_PACKAGE_LIBDM36X_CODECS
+	help
+	  This is a GStreamer plugin for Texas Instruments SoC platforms using the CodecEngine API.
+	  This plugin is a follow up project developed by RidgeRun to the gst-dmai-plugin available
+	  from http://gstreamer.ti.com, that adds support for the GStreamer 1.0 API and merges the
+	  design concepts from the ddompe branch into a refactored design.
+	  
+	  Currently this projects targets support for the following platforms:
+	  - DM36x

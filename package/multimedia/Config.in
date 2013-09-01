@@ -14,6 +14,17 @@ source "package/multimedia/gst-plugins-base/Config.in"
 source "package/multimedia/gst-plugins-good/Config.in"
 source "package/multimedia/gst-plugins-bad/Config.in"
 source "package/multimedia/gst-plugins-ugly/Config.in"
+
+# Gstreamer 1.x & Plugins
+source "package/multimedia/gstreamer1/Config.in"
+source "package/multimedia/gst1-plugins-base/Config.in"
+source "package/multimedia/gst1-plugins-good/Config.in"
+source "package/multimedia/gst1-plugins-bad/Config.in"
+source "package/multimedia/gst1-plugins-ugly/Config.in"
+source "package/multimedia/gst-omx/Config.in"
+source "package/multimedia/gst1-ce-plugin/Config.in"
+source "package/multimedia/libdm36x-codecs/Config.in"
+
 source "package/multimedia/lame/Config.in"
 source "package/multimedia/madplay/Config.in"
 source "package/multimedia/mpd/Config.in"
