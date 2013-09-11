@@ -3,9 +3,13 @@
 # Start the onboard Wi-Fi
 #
 
+APADDR=192.168.2.1
+
+
 # Check uEnv parameter "wifi=on"
 
 CMDLINE=`cat /proc/cmdline | grep "wifi=on"`
+AP=`cat /proc/cmdline | grep "ap=on"`
 
 if [ ! "$CMDLINE" == "" ]; then
     echo "Wi-Fi onboard module enabled"
@@ -16,15 +20,19 @@ fi
 
 case "$1" in
   start)
-	IF0=`cat /tmp/ifstate`
-	if [ ! "$IF0" == "wlan0=wlan0" ]; then
-	    echo "wlan0 not found, waiting 5 seconds..."
-	    sleep 5
+	if [ ! "$AP" = "" ] ; then 
+		echo "Starting acces point..."
+		modprobe uap8xxx.ko
+		ifconfig uap0 $APADDR up
+		/etc/virt2real/ap.sh &
+		exit
 	fi
+
+
+	echo "Starting Wi-Fi client..."
 	
-	echo "Starting Wi-Fi..."
-	/usr/sbin/wpa_supplicant -Dwext -iwlan0 -c /etc/wpa_supplicant.conf -B
-	/usr/sbin/wpa_cli -B -a /etc/virt2real/wlanchanged.sh
+	/etc/virt2real/wlan.sh &
+	
 	;;
   stop)
 	echo -n "Stopping Wi-Fi..."

@@ -11,3 +11,6 @@ mount -t debugfs debugfs /sys/kernel/debug
 
 # turn on wi-fi don't sleep script
 /etc/virt2real/dontsleep.sh &
+
+# path for NodeJS global modules
+export NODE_PATH=/usr/lib/node_modules
