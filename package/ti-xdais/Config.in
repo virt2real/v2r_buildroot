@@ -1,0 +1,8 @@
+config BR2_PACKAGE_TI_XDAIS
+	bool "ti-xdais"
+	help
+	  The XDAIS (eXpress DSP Algorithm Interoperability Standard)
+	  Developer's Kit provides the header files and specifications
+	  needed to implement XDAIS-compliant algorithms.
+
+	  http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/xdais/

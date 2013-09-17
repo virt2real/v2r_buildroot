@@ -1,0 +1,36 @@
+#############################################################
+#
+# ti-gstreamer
+#
+#############################################################
+
+TI_GSTREAMER_VERSION = 919
+TI_GSTREAMER_SITE_METHOD = svn
+TI_GSTREAMER_SITE = https://gforge.ti.com/svn/gstreamer_ti/trunk --username anonymous --password ''
+TI_GSTREAMER_DEPENDENCIES = ti-dmai gstreamer gst-plugins-base
+
+TI_GSTREAMER_SUBDIR = gstreamer_ti/ti_build/ticodecplugin
+TI_GSTREAMER_AUTORECONF = YES
+
+TI_GSTREAMER_PLATFORM = dm368
+TI_GSTREAMER_XDC_PLATFORM = ti.platforms.evmDM365
+TI_GSTREAMER_MAKE_ENV += PLATFORM=$(TI_GSTREAMER_PLATFORM) \
+		GST_TI_PLATFORM=$(TI_GSTREAMER_PLATFORM) \
+		XDC_PLATFORM=$(TI_GSTREAMER_XDC_PLATFORM) \
+		XDC_TARGET="gnu.targets.arm.GCArmv5T" \
+		PLATFORM_XDC=$(TI_GSTREAMER_XDC_PLATFORM) \
+		CSTOOL_DIR="$(HOST_DIR)/usr" \
+		MVTOOL_DIR="$(HOST_DIR)/usr" \
+		MVTOOL_PREFIX=$(TARGET_CROSS) \
+		CROSS_COMPILE=$(TARGET_CROSS) \
+		XDC_INSTALL_DIR="$(TI_XDCTOOLS_INSTALL_DIR)" \
+		FC_INSTALL_DIR="$(TI_FRAMEWORK_COMPONENTS_INSTALL_DIR)" \
+		CE_INSTALL_DIR="$(TI_CODEC_ENGINE_INSTALL_DIR)" \
+		XDAIS_INSTALL_DIR="$(TI_XDAIS_INSTALL_DIR)" \
+		CODEC_INSTALL_DIR="$(TI_CODECS_INSTALL_DIR)" \
+		CMEM_INSTALL_DIR="$(TI_LINUXUTILS_INSTALL_DIR)" \
+		DMAI_INSTALL_DIR="$(TI_DMAI_INSTALL_DIR)" \
+		LINK_XDC_ROOT=""
+TI_GSTREAMER_MAKE_OPT = CPPFLAGS="-Dxdc__RESTRICT__ -DPlatform_$(TI_GSTREAMER_PLATFORM)"
+
+$(eval $(autotools-package))

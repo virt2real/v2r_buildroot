@@ -1,0 +1,12 @@
+config BR2_PACKAGE_TI_CODEC_ENGINE
+	bool "ti-linuxutils"
+	select BR2_PACKAGE_TI_FRAMEWORK_COMPONENTS
+	select BR2_PACKAGE_TI_XDAIS
+	select BR2_PACKAGE_TI_XDCTOOLS
+	select BR2_PACKAGE_TI_LINUXUTILS
+	help
+	  Codec Engine is a framework that automates the invocation and
+	  instantiation of XDAIS-compliant algorithms and XDM-compliant
+	  codecs.
+
+	  http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/

@@ -1,0 +1,13 @@
+config BR2_PACKAGE_TI_FRAMEWORK_COMPONENTS
+	bool "ti-framework-components"
+	help
+	  The Framework Components product enables faster implementation
+	  of application frameworks that use algorithms and codecs that
+	  comply to the XDAIS standard. XDAIS defines standards that prevent
+	  algorithms from hard-coding ownership of system resources such
+	  as memory and DMA channels. An XDAIS-compliant algorithm enables
+	  the application framework to query it and provide information on
+	  specific memory DMA and other resources it needs. This makes
+	  integration of algorithms from multiple sources much easier.
+
+	  http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/fc/
