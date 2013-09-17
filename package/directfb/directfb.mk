@@ -22,6 +22,7 @@ DIRECTFB_CONF_OPT = \
 	--disable-osx \
 	--disable-video4linux \
 	--disable-video4linux2 \
+	--disable-imlib2 \
 	--without-tools
 DIRECTFB_CONFIG_SCRIPTS = directfb-config
 
