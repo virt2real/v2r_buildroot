@@ -9,7 +9,7 @@ TI_CODEC_ENGINE_SOURCE = codec_engine_$(TI_CODEC_ENGINE_VERSION),lite.tar.gz
 TI_CODEC_ENGINE_SITE = http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/$(TI_CODEC_ENGINE_VERSION)/exports/
 TI_CODEC_ENGINE_INSTALL_STAGING = YES
 
-TI_CODEC_ENGINE_DEPENDENCIES = ti-framework-components ti-xdais ti-xdctools ti-linuxutils
+TI_CODEC_ENGINE_DEPENDENCIES = ti-framework-components ti-xdais ti-xdctools
 
 TI_CODEC_ENGINE_INSTALL_DIR_RECIPE = /usr/share/ti/ti-codec-engine-tree
 TI_CODEC_ENGINE_INSTALL_DIR = $(STAGING_DIR)$(TI_CODEC_ENGINE_INSTALL_DIR_RECIPE)
