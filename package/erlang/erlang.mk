@@ -13,11 +13,11 @@ HOST_ERLANG_DEPENDENCIES =
 ERLANG_LICENSE = EPL
 ERLANG_LICENSE_FILES = EPLICENCE
 
-# The configure checks for these functions fail incorrectly
-ERLANG_CONF_ENV = ac_cv_func_isnan=yes ac_cv_func_isinf=yes
+ERLANG_CONF_ENV = ac_cv_func_isnan=yes ac_cv_func_isinf=yes erl_xcomp_sysroot=$(STAGING_DIR) ac_cv_func_mmap_fixed_mapped=yes \
+                  ac_cv_path_WX_CONFIG_PATH=no erl_xcomp_getaddrinfo=no
 
-ERLANG_CONF_OPT = --without-javac
-HOST_ERLANG_CONF_OPT = --without-javac
+ERLANG_CONF_OPT = --without-javac --disable-smp-support --disable-hipe
+HOST_ERLANG_CONF_OPT = --without-javac --disable-hipe
 
 ifeq ($(BR2_PACKAGE_NCURSES),y)
 ERLANG_CONF_OPT += --with-termcap
