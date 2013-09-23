@@ -1,4 +1,0 @@
-config BR2_PACKAGE_TI_DM365MMAP
-	bool "ti-dm365mmap"
-	help
-	  User space DMA module for DM365. Part of the DVSDK

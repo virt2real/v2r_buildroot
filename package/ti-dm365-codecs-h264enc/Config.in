@@ -1,6 +1,0 @@
-config BR2_PACKAGE_TI_DM365_CODECS_H264ENC
-	bool "ti-dm365-codecs-h264enc"
-	help
-	  H.264 1080P 30fps encoder for DM3xx processors
-
-	  http://software-dl.ti.com/dsps/dsps_public_sw/codecs/DM365/index_FDS.html

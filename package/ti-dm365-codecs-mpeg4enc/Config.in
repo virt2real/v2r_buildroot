@@ -1,6 +1,0 @@
-config BR2_PACKAGE_TI_DM365_CODECS_MPEG4ENC
-	bool "ti-dm365-codecs-mpeg4enc"
-	help
-	  MPEG4 SP/ASP@L5 Encoder upto 1080P using HDVICP
-
-	  http://software-dl.ti.com/dsps/dsps_public_sw/codecs/DM365/index_FDS.html

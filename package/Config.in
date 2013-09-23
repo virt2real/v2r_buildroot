@@ -3,16 +3,7 @@ menu "Package Selection for the target"
 source "package/busybox/Config.in"
 
 menu "TI DM36x components"
-source "package/ti-codec-engine/Config.in"
-source "package/ti-dm365-codecs-aaclcenc/Config.in"
-source "package/ti-dm365-codecs-h264enc/Config.in"
-source "package/ti-dm365-codecs-mpeg4enc/Config.in"
-source "package/ti-dm365mmap/Config.in"
-source "package/ti-dmai/Config.in"
-source "package/ti-framework-components/Config.in"
-source "package/ti-gstreamer/Config.in"
-source "package/ti-xdais/Config.in"
-source "package/ti-xdctools/Config.in"
+source "package/ti-gstreamer-dmai/Config.in"
 endmenu
 
 # Audio and video applications

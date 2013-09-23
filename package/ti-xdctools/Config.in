@@ -1,6 +1,0 @@
-config BR2_PACKAGE_TI_XDCTOOLS
-	bool "ti-xdctools"
-	help
-	  TI XDCtools (RTSC - Real Time Software Components - http://rtsc.eclipse.org)
-
-	  http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/rtsc/

@@ -1,6 +1,0 @@
-config BR2_PACKAGE_TI_DM365_CODECS_AACLCENC
-	bool "ti-dm365-codecs-aaclc4enc"
-	help
-	  MPEG-2/4 AAC-LC audio encoder
-
-	  http://software-dl.ti.com/dsps/dsps_public_sw/codecs/DM365/index_FDS.html
