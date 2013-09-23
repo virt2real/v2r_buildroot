@@ -1,0 +1,9 @@
+config BR2_PACKAGE_TI_GSTREAMER_DMAI
+	bool "ti-gstreamer-dmai"
+	select BR2_PACKAGE_GSTREAMER
+	select BR2_PACKAGE_GST_PLUGINS_BASE
+	help
+	  GSTREAMER Plugin (gstreamer-ti) for TI ARM/DSP
+	  processors
+
+	  https://gforge.ti.com/gf/project/gstreamer_ti/
