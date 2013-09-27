@@ -3,7 +3,8 @@ menu "Package Selection for the target"
 source "package/busybox/Config.in"
 
 menu "TI DM36x components"
-source "package/ti-gstreamer-dmai/Config.in"
+source "package/DM36x/ti-gstreamer-dmai/Config.in"
+source "package/DM36x/ipiped/Config.in"
 endmenu
 
 # Audio and video applications

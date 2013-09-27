@@ -1,0 +1,10 @@
+config BR2_PACKAGE_IPIPED
+	bool "ipiped"
+	select BR2_PACKAGE_GSTREAMER
+	select BR2_PACKAGE_GST_PLUGINS_BASE
+	help
+		Image Pipe Daemon is a daemon with DBus interface that allows to control and
+		interact with the functionality provided by the image pipe (ipipe) hardware
+		on Texas Instruments SoC families like Davincis or OMAP.
+		
+		https://github.com/RidgeRun/ipiped
