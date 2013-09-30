@@ -1,7 +1,7 @@
 config BR2_PACKAGE_RTMPDUMP
-        bool "rtmpdump"
-        select BR2_PACKAGE_ZLIB
-        select BR2_PACKAGE_OPENSSL
-        help
-        a toolkit for RTMP streams.
-        http://rtmpdump.mplayerhq.hu/
+	bool "rtmpdump"
+	select BR2_PACKAGE_ZLIB
+	select BR2_PACKAGE_OPENSSL
+	help
+	 The toolkit for RTMP streams.
+	 http://rtmpdump.mplayerhq.hu/

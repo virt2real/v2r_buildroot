@@ -579,6 +579,7 @@ endif
 
 ifeq ($(BR2_PACKAGE_GST_PLUGINS_BAD_PLUGIN_RTMP),y)
 GST_PLUGINS_BAD_CONF_OPT += --enable-rtmp
+GST_PLUGINS_BAD_DEPENDENCIES += rtmpdump
 else
 GST_PLUGINS_BAD_CONF_OPT += --disable-rtmp
 endif
