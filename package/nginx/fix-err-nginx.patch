@@ -1,0 +1,22 @@
+diff -ur nginx-1.4.2.orig/auto/unix nginx-1.4.2/auto/unix
+--- nginx-1.4.2.orig/auto/unix	2013-10-07 22:14:15.000000000 +0200
++++ nginx-1.4.2/auto/unix	2013-10-07 22:11:33.000000000 +0200
+@@ -537,12 +537,17 @@
+ 
+ ngx_feature="sys_nerr"
+ ngx_feature_name="NGX_SYS_NERR"
+-ngx_feature_run=value
+ ngx_feature_incs='#include <errno.h>
+                   #include <stdio.h>'
+ ngx_feature_path=
+ ngx_feature_libs=
+ ngx_feature_test='printf("%d", sys_nerr);'
++if [[ "$NGX_PLATFORM" != cross-* ]];
++then
++    ngx_feature_run=value
++else
++    ngx_feature_run=no
++fi
+ . auto/feature
+ 
+ 

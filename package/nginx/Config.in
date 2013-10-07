@@ -1,0 +1,46 @@
+config BR2_PACKAGE_NGINX
+	bool "nginx"
+	help
+	 A high perfomance http and reverse proxy server
+
+	  http://www.nginx.org/
+
+config BR2_PACKAGE_NGINX_AIO
+	bool "Enable AIO"
+	depends on BR2_PACKAGE_NGINX
+	help
+	  Enable AIO support.
+
+config BR2_PACKAGE_NGINX_HTTP_CACHE
+	bool "Enable Cache Module"
+	depends on BR2_PACKAGE_NGINX
+	select BR2_PACKAGE_OPENSSL
+	help
+	  Enable HTTP Cache Module.
+
+config BR2_PACKAGE_NGINX_HTTP_GZIP_STATIC
+	bool "Enable GZip Static Module"
+	depends on BR2_PACKAGE_NGINX
+	select BR2_PACKAGE_ZLIB
+	help
+	  Enable HTTP GZip Static Module.
+
+config BR2_PACKAGE_NGINX_HTTP_REWRITE
+	bool "Enable Rewrite Module"
+	depends on BR2_PACKAGE_NGINX
+	select BR2_PACKAGE_PCRE
+	help
+	  Enable HTTP Rewrite Module.
+
+config BR2_PACKAGE_NGINX_HTTP_SSL
+	bool "Enable SSL Module"
+	depends on BR2_PACKAGE_NGINX
+	select BR2_PACKAGE_OPENSSL
+	help
+	  Enable HTTP SSL Module.
+
+config BR2_PACKAGE_NGINX_HTTP_RTMP
+	bool "Enable RTMP module"
+	depends on BR2_PACKAGE_NGINX
+	help
+	  Enable NGINX-based Media Streaming Server.

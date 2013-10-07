@@ -1,0 +1,7 @@
+config BR2_PACKAGE_GST_RTSP_SERVER
+	bool "gst-rtsp-server"
+	select BR2_PACKAGE_GSTREAMER
+	help
+	 Standalone RTSP server.
+	 
+	 http://gstreamer.freedesktop.org/src/gst-rtsp-server/
