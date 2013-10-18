@@ -1,0 +1,6 @@
+config BR2_PACKAGE_RFKILL
+	bool "rfkill"
+	help
+	  rfkill
+
+	  https://www.kernel.org/pub/software/network/rfkill/
