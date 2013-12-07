@@ -11,7 +11,7 @@ sed -i 's%root::%root:8kfIfYHmcyQEE:%' $TARGETDIR/etc/shadow
 rm $TARGETDIR/etc/resolv.conf
 rm $TARGETDIR/etc/init.d/S01logging
 rm $TARGETDIR/etc/init.d/S10udev
-
+rm $TARGETDIR/etc/init.d/S99input-event-daemon
 
 # Copy the rootfs additions
 cp -r $BOARDDIR/rootfs-additions/* $TARGETDIR/
