@@ -1,68 +1,26 @@
 #############################################################
 #
-# gphotofs
+# GPHOTOFS
 #
 #############################################################
-GPHOTOFS_VERSION:=0.4.0
-GPHOTOFS_SOURCE:=gphotofs-$(GPHOTOFS_VERSION).tar.bz2
-#GPHOTOFS_SITE:=http://$(BR2_SOURCEFORGE_MIRROR).dl.sourceforge.net/sourceforge/gphoto/
-GPHOTOFS_SITE:=http://sourceforge.net/projects/gphoto/files/
-GPHOTOFS_CAT:=$(BZCAT)
-GPHOTOFS_DIR:=$(BUILD_DIR)/gphotofs-$(GPHOTOFS_VERSION)
-GPHOTOFS_TARGET_BINARY:=usr/bin/gphotofs
 
-$(DL_DIR)/$(GPHOTOFS_SOURCE):
-	 $(WGET) -P $(DL_DIR) $(GPHOTOFS_SITE)/$(GPHOTOFS_SOURCE)
+GPHOTOFS_VERSION = 0.5
+GPHOTOFS_SOURCE = gphotofs-$(GPHOTOFS_VERSION).tar.gz
+#GPHOTOFS_SITE = http://$(BR2_SOURCEFORGE_MIRROR).dl.sourceforge.net/sourceforge/gphoto/gphotofs
+GPHOTOFS_SITE = http://citylan.dl.sourceforge.net/project/gphoto/gphotofs/0.5.0/
+GPHOTOFS_INSTALL_STAGING = YES
+GPHOTOFS_INSTALL_TARGET = YES
+GPHOTOFS_DEPENDENCIES = host-libgphoto2 libusb-compat libfuse libgphoto2 udev
+GPHOTOFS_CONF_ENV += LDFLAGS+="-lgphoto2"
 
-$(GPHOTOFS_DIR)/.unpacked: $(DL_DIR)/$(GPHOTOFS_SOURCE)
-	$(GPHOTOFS_CAT) $(DL_DIR)/$(GPHOTOFS_SOURCE) | tar -C $(BUILD_DIR) $(TAR_OPTIONS) -
-	toolchain/patch-kernel.sh $(GPHOTOFS_DIR) package/gphotofs/ gphotofs-\*.patch
-	touch $@
+define GPHOTOFS_INSTALL_UDEV
+        $(HOST_DIR)/usr/lib/libgphoto2/print-camera-list udev-rules version 175 mode 0660 > $(TARGET_DIR)/etc/udev/rules.d/40-gphoto.rules
+        cat package/gphotofs/40-gphoto.rules >> $(TARGET_DIR)/etc/udev/rules.d/40-gphoto.rules
+        $(INSTALL) -m 0755 package/gphotofs//mountptp.sh $(TARGET_DIR)/usr/bin/mountptp.sh
+        $(INSTALL) -m 0755 package/gphotofs//umountptp.sh $(TARGET_DIR)/usr/bin/umountptp.sh
+endef
 
-$(GPHOTOFS_DIR)/.configured: $(GPHOTOFS_DIR)/.unpacked
-	(cd $(GPHOTOFS_DIR); rm -rf config.cache; \
-		$(TARGET_CONFIGURE_OPTS) \
-		$(TARGET_CONFIGURE_ARGS) \
-		LTDLINCL=-I$(TARGET_DIR)/usr/include \
-		LDFLAGS="$(LDFLAGS) -L$(TARGET_DIR)/usr/lib" \
-		LIBS="$(LIBS) -lltdl" \
-		./configure \
-		--target=$(GNU_TARGET_NAME) \
-		--host=$(GNU_TARGET_NAME) \
-		--build=$(GNU_HOST_NAME) \
-		--prefix=/usr \
-		--bindir=$(STAGING_DIR)/usr/bin \
-		--libdir=$(STAGING_DIR)/usr/lib \
-		--includedir=$(STAGING_DIR)/usr/include \
-	)
-	touch $@
+GPHOTOFS_POST_INSTALL_TARGET_HOOKS += GPHOTOFS_INSTALL_UDEV
 
-$(GPHOTOFS_DIR)/.compiled: $(GPHOTOFS_DIR)/.configured
-	$(MAKE) CC=$(TARGET_CC) -C $(GPHOTOFS_DIR)
-
-$(STAGING_DIR)/$(GPHOTOFS_TARGET_BINARY): $(GPHOTOFS_DIR)/.compiled
-	$(MAKE) prefix=$(STAGING_DIR) -C $(GPHOTOFS_DIR) install
-
-$(TARGET_DIR)/$(GPHOTOFS_TARGET_BINARY): $(STAGING_DIR)/$(GPHOTOFS_TARGET_BINARY)
-	$(INSTALL) -m 755 $(STAGING_DIR)/$(GPHOTOFS_TARGET_BINARY)* $(TARGET_DIR)/$(GPHOTOFS_TARGET_BINARY)
-
-gphotofs: uclibc libtool libgphoto2 libglib2 $(TARGET_DIR)/$(GPHOTOFS_TARGET_BINARY)
-
-gphotofs-source: $(DL_DIR)/$(GPHOTOFS_SOURCE)
-
-gphotofs-clean:
-	$(RM) -rf $(TARGET_DIR)/$(GPHOTOFS_TARGET_BINARY)
-	$(MAKE) DESTDIR=$(TARGET_DIR) CC=$(TARGET_CC) -C $(GPHOTOFS_DIR) uninstall
-	-$(MAKE) -C $(GPHOTOFS_DIR) clean
-
-gphotofs-dirclean:
-	rm -rf $(GPHOTOFS_DIR)
-
-#############################################################
-#
-# Toplevel Makefile options
-#
-#############################################################
-ifeq ($(strip $(BR2_PACKAGE_GPHOTOFS)),y)
-TARGETS+=gphotofs
-endif
+#$(eval $(call AUTOTARGETS,package/thirdparty,gphotofs))
+$(eval $(autotools-package))
