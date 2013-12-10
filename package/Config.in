@@ -320,7 +320,7 @@ source "package/xavante/Config.in"
 endmenu
 endif
 source "package/nodejs/Config.in"
-source "package/nodejs-0.8.22/Config.in"
+#source "package/nodejs-0.8.22/Config.in"
 source "package/perl/Config.in"
 if BR2_PACKAGE_PERL
 menu "Perl libraries/modules"

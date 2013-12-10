@@ -2,5 +2,7 @@ config BR2_PACKAGE_GPHOTO2
 	bool "gphoto2"
 	default n
 	select BR2_PACKAGE_LIBGPHOTO2
+	select BR2_PACKAGE_LIBEXIF
+	select BR2_PACKAGE_POPT
 	help
 	  GPhoto2
