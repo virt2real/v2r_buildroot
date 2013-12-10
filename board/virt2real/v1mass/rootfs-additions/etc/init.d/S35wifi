@@ -3,13 +3,8 @@
 # Start the onboard Wi-Fi
 #
 
-APADDR=192.168.2.1
-
-
 # Check uEnv parameter "wifi=on"
-
 CMDLINE=`cat /proc/cmdline | grep "wifi=on"`
-AP=`cat /proc/cmdline | grep "ap=on"`
 
 if [ ! "$CMDLINE" == "" ]; then
     echo "Wi-Fi onboard module enabled"
@@ -20,17 +15,18 @@ fi
 
 case "$1" in
   start)
+
+	# Check uEnv parameter "ap=on"
+	AP=`cat /proc/cmdline | grep "ap=on"`
+
 	if [ ! "$AP" = "" ] ; then 
 		echo "Starting acces point..."
-		modprobe uap8xxx.ko
-		ifconfig uap0 $APADDR up
-		/etc/virt2real/ap.sh &
-		exit
+		/etc/virt2real/ap.sh /etc/softap.conf &
+		exit 0
 	fi
 
 
 	echo "Starting Wi-Fi client..."
-	
 	/etc/virt2real/wlan.sh &
 	
 	;;
