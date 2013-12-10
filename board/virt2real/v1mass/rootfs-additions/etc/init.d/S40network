@@ -5,12 +5,12 @@
 
 case "$1" in
   start)
- 	#echo "Starting network..."
-	#/sbin/ifup -a -f
+ 	echo "Starting network..."
+	/sbin/ifup lo -f > /dev/null
 	;;
   stop)
-	#echo -n "Stopping network..."
-	#/sbin/ifdown -a
+	echo -n "Stopping network..."
+	/sbin/ifdown -a
 	;;
   restart|reload)
 	"$0" stop

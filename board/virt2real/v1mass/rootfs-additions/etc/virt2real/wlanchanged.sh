@@ -1,15 +1,16 @@
 #!/bin/sh
 
-echo "WI-FI: " $1 $2
-
 case "$2" in
+
+CONNECTED)
+	ifdown $1
+	ifup $1
+	/etc/virt2real/setlight.sh red on
+;;
+
 DISCONNECTED)
 	/etc/virt2real/setlight.sh red off
 ;;
 
-CONNECTED)
-	#ifup $1
-	/etc/virt2real/setlight.sh red on
-;;
 esac
 
