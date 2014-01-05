@@ -3,28 +3,26 @@
 # $Id: dhcp3-server.init.d,v 1.4 2003/07/13 19:12:41 mdz Exp $
 #
 
-
-
 # On what interfaces should the DHCP server (dhcpd) serve DHCP requests?
 #       Separate multiple interfaces with spaces, e.g. "eth0 eth1".
-INTERFACES=""
 
+INTERFACES="uap0"
 
-# It is not safe to start if we don't have a default configuration...
-echo "/etc/init.d/dhcp-server not yet configured! - Aborting..."
-exit 1;
+test ! -f /usr/sbin/dhcpd && exit 0
 
-
-
-test -f /usr/sbin/dhcpd || exit 0
-
+AP=`cat /proc/cmdline | grep "ap=on"`
+if [ "$AP" = "" ] ; then
+  exit
+fi
 
 case "$1" in
 	start)
 		echo -n "Starting DHCP server: "
-		test -d /var/lib/dhcp/ || mkdir -p /var/lib/dhcp/
-		test -f /var/lib/dhcp/dhcpd.leases || touch /var/lib/dhcp/dhcpd.leases	
-		start-stop-daemon -S -x /usr/sbin/dhcpd -- -q $INTERFACES
+		test ! -d /var/lib/dhcp/ && mkdir -p /var/lib/dhcp/
+		test ! -f /var/lib/dhcp/dhcpd.leases && touch /var/lib/dhcp/dhcpd.leases
+		test ! -f /etc/dhcpd.conf && ln -s /etc/dhcp/dhcpd.conf /etc/dhcpd.conf > /dev/null
+		test -f /var/run/dhcpd.pid && rm /var/run/dhcpd.pid > /dev/null
+		start-stop-daemon -S -x /usr/sbin/dhcpd  -q $INTERFACES
 		echo "."
 		;;
 	stop)
