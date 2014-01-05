@@ -92,7 +92,21 @@ define NGINX_CONFIGURE_CMDS
         ./configure \
         $(NGINX_CONF_OPT) \
     )
+
 endef
+
+define NGINX_INSTALL_TARGET_CMDS
+
+	mkdir -p $(TARGET_DIR)/etc/nginx
+	mkdir -p $(TARGET_DIR)/etc/init.d
+	mkdir -p $(TARGET_DIR)/var/www
+	$(INSTALL) -D -m 0755 $(@D)/objs/nginx $(TARGET_DIR)/usr/sbin/nginx
+	$(INSTALL) -D -m 0644 $(@D)/conf/* $(TARGET_DIR)/etc/nginx/
+	$(INSTALL) -D -m 0644 package/nginx/nginx.conf $(TARGET_DIR)/etc/nginx/
+	$(INSTALL) -D -m 0755 package/nginx/S46nginx $(TARGET_DIR)/etc/init.d/
+
+endef
+
 
 define NGINX_UNINSTALL_TARGET_CMDS
 	rm -f $(TARGET_DIR)/usr/sbin/nginx
