@@ -39,7 +39,7 @@ pkg_appears_sane() {
 	required_field Maintainer >/dev/null
 	required_field Description >/dev/null
 
-	if echo $pkg | grep '[^a-z0-9.+-]'; then
+	if echo $pkg | grep '[^a-z0-9.+-_]'; then
 		echo "opkg-build: Error: Package name $name contains illegal characters, (other than [a-z0-9.+-])"
 		PKG_ERROR=1;
 	fi
@@ -119,7 +119,7 @@ tar -C $pkg_dir/$CONTROL -czf $tmp_dir/control.tar.gz .
 
 echo "2.0" > $tmp_dir/debian-binary
 
-pkg_file=$dest_dir/${pkg}_${version}_${arch}.opk
+pkg_file=$dest_dir/${pkg}-${version}.${arch}.opk
 tar -C $tmp_dir -czf $pkg_file debian-binary data.tar.gz control.tar.gz
 rm $tmp_dir/debian-binary $tmp_dir/data.tar.gz $tmp_dir/control.tar.gz
 rmdir $tmp_dir
