@@ -34,11 +34,13 @@ PROFTPD_MAKE=$(MAKE1)
 
 define PROFTPD_INSTALL_TARGET_CMDS
 	$(INSTALL) -D -m 0755 $(@D)/proftpd $(TARGET_DIR)/usr/sbin/proftpd
-	@if [ ! -f $(TARGET_DIR)/etc/proftpd.conf ]; then \
-		$(INSTALL) -m 0644 -D $(@D)/sample-configurations/basic.conf $(TARGET_DIR)/etc/proftpd.conf; \
-		$(if $(BR2_INET_IPV6),,$(SED) 's/^UseIPv6/# UseIPv6/' $(TARGET_DIR)/etc/proftpd.conf;) \
+	@if [ ! -f $(TARGET_DIR)/etc/proftpd.conf.sample ]; then \
+		$(INSTALL) -m 0644 -D $(@D)/sample-configurations/basic.conf $(TARGET_DIR)/etc/proftpd.conf.sample; \
+		$(if $(BR2_INET_IPV6),,$(SED) 's/^UseIPv6/# UseIPv6/' $(TARGET_DIR)/etc/proftpd.conf.sample;) \
 	fi
-	$(INSTALL) -m 0755 package/proftpd/S50proftpd $(TARGET_DIR)/etc/init.d
+	mkdir $(TARGET_DIR)/etc/init.d
+	$(INSTALL) -m 0755 package/proftpd/S50proftpd $(TARGET_DIR)/etc/init.d/
+	$(INSTALL) -m 0755 package/proftpd/proftpd.conf $(TARGET_DIR)/etc
 endef
 
 define PROFTPD_UNINSTALL_TARGET_CMDS
