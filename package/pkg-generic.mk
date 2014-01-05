@@ -160,6 +160,66 @@ ifeq ($(BR2_HAVE_DEVFILES),)
 endif
 	$(Q)touch $@
 
+# Install to package dir
+# Step one - override TARGET_DIR 
+$(BUILD_DIR)/%/.stamp_xpackage_installed: TARGET_DIR=$($(PKG)_XPACKAGE_DIR)
+
+#not-magic stuff to replace spaces with commas by $(subst $(space), $comma, $(var))
+comma:= ,
+empty:=
+space:= $(empty) $(empty)
+
+# Step two - call install target stuff 
+$(BUILD_DIR)/%/.stamp_xpackage_installed:
+	@$(call MESSAGE,"Installing to package")
+	-rm -Rf $(TARGET_DIR)
+	mkdir -p $(TARGET_DIR)
+	$($(PKG)_INSTALL_TARGET_CMDS)
+	$(foreach hook,$($(PKG)_POST_INSTALL_TARGET_HOOKS),$(call $(hook))$(sep))
+# 	$(Q)touch $@
+
+	# run packager opkg
+	mkdir -p $($(PKG)_XPACKAGE_DIR)/CONTROL
+
+	# Create control file
+	echo "Package: $(${PKG}_RAWNAME)" > $($(PKG)_XPACKAGE_DIR)/CONTROL/control
+	echo "Version: $($(PKG)_VERSION)" >> $($(PKG)_XPACKAGE_DIR)/CONTROL/control
+	echo "Architecture: $(ARCH)" >> $($(PKG)_XPACKAGE_DIR)/CONTROL/control
+	echo "Maintainer: maint@virt2real.local" >> $($(PKG)_XPACKAGE_DIR)/CONTROL/control
+	echo "Description: $($(PKG)_RAWNAME) for Virt2real" >> $($(PKG)_XPACKAGE_DIR)/CONTROL/control
+	echo "Section: misc" >> $($(PKG)_XPACKAGE_DIR)/CONTROL/control
+	echo "Priority: optional" >> $($(PKG)_XPACKAGE_DIR)/CONTROL/control
+	echo "Source: $($(PKG)_SITE:/=)/$($(PKG)_SOURCE)" >> $($(PKG)_XPACKAGE_DIR)/CONTROL/control
+	echo "Depends: $(subst $(space),$(comma),$(filter-out host-%,$($(PKG)_DEPENDENCIES)))" >> $($(PKG)_XPACKAGE_DIR)/CONTROL/control
+
+	# build a package
+	$(TOPDIR)/package/opkg/opkg-build $($(PKG)_XPACKAGE_DIR) $(XPACKAGE_DIR)
+
+	# update Package list file
+
+	# create Package list file if not exists
+	if [ ! -b $(XPACKAGE_DIR)/Packages ] ; then touch $(XPACKAGE_DIR)/Packages ; fi
+
+	$(V)echo "Package: $(${PKG}_RAWNAME)" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Version: $($(PKG)_VERSION)" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Depends: $(subst $(space),$(comma),$(filter-out host-%,$($(PKG)_DEPENDENCIES)))" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Provides: " >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Source: package/$(${PKG}_RAWNAME)" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Section: misc" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Status: unknown ok not-installed" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Essential: no" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Priority: optional" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Architecture: $(ARCH)" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Installed-Size: " >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Filename: $(${PKG}_RAWNAME)-$($(PKG)_VERSION).$(ARCH).opk" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Size: " >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "Description: $($(PKG)_RAWNAME) for Virt2real" >> $(XPACKAGE_DIR)/Packages
+	$(V)echo "" >> $(XPACKAGE_DIR)/Packages
+	
+	# remove package dir
+	#rm -Rf $(TARGET_DIR)
+
+
 # Clean package
 $(BUILD_DIR)/%/.stamp_cleaned:
 	@$(call MESSAGE,"Cleaning up")
@@ -172,6 +232,7 @@ $(BUILD_DIR)/%/.stamp_uninstalled:
 	@$(call MESSAGE,"Uninstalling")
 	rm -f $($(PKG)_TARGET_INSTALL_STAGING)
 	rm -f $($(PKG)_TARGET_INSTALL_TARGET)
+	rm -f $($(PKG)_TARGET_INSTALL_XPACKAGE)
 	$($(PKG)_UNINSTALL_STAGING_CMDS)
 	$($(PKG)_UNINSTALL_TARGET_CMDS)
 	$(if $(BR2_INIT_SYSTEMD),\
@@ -241,6 +302,7 @@ endif
 
 $(2)_SRCDIR		       = $$($(2)_DIR)/$$($(2)_SUBDIR)
 $(2)_BUILDDIR		       ?= $$($(2)_SRCDIR)
+$(2)_XPACKAGE_DIR = $(XPACKAGE_DIR)/$(1)-$$($(2)_VERSION)
 
 ifneq ($$($(2)_OVERRIDE_SRCDIR),)
 $(2)_VERSION = custom
@@ -313,6 +375,7 @@ $(2)_DIR_PREFIX			= $(if $(4),$(4),$(TOP_SRCDIR)/package)
 
 # define sub-target stamps
 $(2)_TARGET_INSTALL_TARGET =	$$($(2)_DIR)/.stamp_target_installed
+$(2)_TARGET_INSTALL_XPACKAGE =	$$($(2)_DIR)/.stamp_xpackage_installed
 $(2)_TARGET_INSTALL_STAGING =	$$($(2)_DIR)/.stamp_staging_installed
 $(2)_TARGET_INSTALL_IMAGES =	$$($(2)_DIR)/.stamp_images_installed
 $(2)_TARGET_INSTALL_HOST =      $$($(2)_DIR)/.stamp_host_installed
@@ -353,13 +416,17 @@ ifeq ($$($(2)_TYPE),host)
 $(1)-install:	        $(1)-install-host
 else
 $(1)-install:		$(1)-install-staging $(1)-install-target $(1)-install-images
+$(1)-xpkg:		$(1)-install-xpackage
 endif
 
 ifeq ($$($(2)_INSTALL_TARGET),YES)
 $(1)-install-target:	$(1)-build \
 			$$($(2)_TARGET_INSTALL_TARGET)
+$(1)-install-xpackage:	$(1)-build \
+			$$($(2)_TARGET_INSTALL_XPACKAGE)
 else
 $(1)-install-target:
+$(1)-install-xpackage:
 endif
 
 ifeq ($$($(2)_INSTALL_STAGING),YES)
@@ -434,6 +501,7 @@ endif
 			rm -f $$($(2)_TARGET_BUILD)
 			rm -f $$($(2)_TARGET_INSTALL_STAGING)
 			rm -f $$($(2)_TARGET_INSTALL_TARGET)
+			rm -f $$($(2)_TARGET_INSTALL_XPACKAGE)
 			rm -f $$($(2)_TARGET_INSTALL_IMAGES)
 			rm -f $$($(2)_TARGET_INSTALL_HOST)
 
@@ -447,6 +515,7 @@ $(1)-reconfigure:	$(1)-clean-for-reconfigure all
 # define the PKG variable for all targets, containing the
 # uppercase package variable prefix
 $$($(2)_TARGET_INSTALL_TARGET):		PKG=$(2)
+$$($(2)_TARGET_INSTALL_XPACKAGE):	PKG=$(2)
 $$($(2)_TARGET_INSTALL_STAGING):	PKG=$(2)
 $$($(2)_TARGET_INSTALL_IMAGES):		PKG=$(2)
 $$($(2)_TARGET_INSTALL_HOST):           PKG=$(2)

@@ -189,6 +189,7 @@ BASE_DIR := $(shell mkdir -p $(O) && cd $(O) >/dev/null && pwd)
 $(if $(BASE_DIR),, $(error output directory "$(O)" does not exist))
 
 BUILD_DIR:=$(BASE_DIR)/build
+XPACKAGE_DIR:=$(BASE_DIR)/xpackage
 
 
 ifeq ($(BR2_HAVE_DOT_CONFIG),y)
