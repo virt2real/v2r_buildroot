@@ -18,6 +18,7 @@ DIALOG_DEPENDENCIES+=libiconv
 endif
 
 define DIALOG_INSTALL_TARGET_CMDS
+	mkdir -p $(TARGET_DIR)/usr/bin/
 	install -c $(@D)/dialog $(TARGET_DIR)/usr/bin/dialog
 endef
 

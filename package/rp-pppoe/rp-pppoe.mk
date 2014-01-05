@@ -18,6 +18,7 @@ RP_PPPOE_CONF_ENV = \
 	PPPD_H=$(PPPD_DIR)/pppd/pppd.h
 
 define RP_PPPOE_INSTALL_TARGET_CMDS
+	mkdir -p $(TARGET_DIR)/usr/sbin
 	for ff in $(RP_PPPOE_TARGET_FILES); do \
 		$(INSTALL) -m 0755 $(@D)/src/$$ff $(TARGET_DIR)/usr/sbin/$$ff; \
 	done

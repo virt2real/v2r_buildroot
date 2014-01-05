@@ -17,8 +17,9 @@ endef
 
 define LOGROTATE_INSTALL_TARGET_CMDS
 	$(MAKE) PREFIX=$(TARGET_DIR) -C $(@D) install
-	if [ ! -f $(TARGET_DIR)/etc/logrotate.conf ]; then \
-		$(INSTALL) -m 0644 package/logrotate/logrotate.conf $(TARGET_DIR)/etc/logrotate.conf; \
+	mkdir $(TARGET_DIR)/etc
+	if [ ! -f $(TARGET_DIR)/etc/logrotate.conf ] ; then \
+		$(INSTALL) -m 0644 package/logrotate/logrotate.conf $(TARGET_DIR)/etc/logrotate.conf ; \
 	fi
 	$(INSTALL) -d -m 0755 $(TARGET_DIR)/etc/logrotate.d
 endef

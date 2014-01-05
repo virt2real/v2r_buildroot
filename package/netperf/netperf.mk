@@ -11,6 +11,7 @@ NETPERF_LICENSE = netperf license
 NETPERF_LICENSE_FILES = COPYING
 
 define NETPERF_INSTALL_TARGET_CMDS
+	mkdir -p $(TARGET_DIR)/usr/bin
 	$(INSTALL) -m 0755 $(@D)/src/netperf \
 		$(TARGET_DIR)/usr/bin/netperf
 	$(INSTALL) -m 0755 $(@D)/src/netserver \

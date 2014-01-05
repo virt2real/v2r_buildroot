@@ -12,6 +12,7 @@ LESS_LICENSE_FILES = COPYING
 LESS_DEPENDENCIES = ncurses $(if $(BR2_PACKAGE_BUSYBOX),busybox)
 
 define LESS_INSTALL_TARGET_CMDS
+	mkdir -p $(TARGET_DIR)/usr/bin
 	$(INSTALL) -m 0755 $(@D)/less $(TARGET_DIR)/usr/bin/less
 endef
 

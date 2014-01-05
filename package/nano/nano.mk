@@ -17,6 +17,7 @@ ifeq ($(BR2_PACKAGE_NANO_TINY),y)
 endif
 
 define NANO_INSTALL_TARGET_CMDS
+	mkdir -p $(TARGET_DIR)/usr/bin
 	$(INSTALL) -m 0755 $(@D)/src/nano $(TARGET_DIR)/usr/bin/nano
 endef
 

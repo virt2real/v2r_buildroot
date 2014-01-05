@@ -69,6 +69,9 @@ COREUTILS_POST_PATCH_HOOKS += COREUTILS_TOUCH_UNAME_C
 
 define COREUTILS_POST_INSTALL
 	# some things go in root rather than usr
+	mkdir -p $(TARGET_DIR)/bin
+	mkdir -p $(TARGET_DIR)/usr/bin
+	mkdir -p $(TARGET_DIR)/usr/sbin
 	for f in $(COREUTILS_BIN_PROGS); do \
 		mv $(TARGET_DIR)/usr/bin/$$f $(TARGET_DIR)/bin/$$f; \
 	done

@@ -43,6 +43,7 @@ ifeq ($(BR2_PACKAGE_SYSTEMD),y)
 endif
 
 define UDEV_INSTALL_INITSCRIPT
+	mkdir -p $(TARGET_DIR)/etc/init.d
 	$(INSTALL) -m 0755 package/udev/S10udev $(TARGET_DIR)/etc/init.d/S10udev
 endef
 

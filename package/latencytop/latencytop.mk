@@ -15,6 +15,7 @@ define LATENCYTOP_BUILD_CMDS
 endef
 
 define LATENCYTOP_INSTALL_TARGET_CMDS
+	mkdir -p $(TARGET_DIR)/usr/sbin
 	$(MAKE) install -C $(@D) DESTDIR=$(TARGET_DIR) HAS_GTK_GUI=
 endef
 

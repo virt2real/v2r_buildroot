@@ -28,6 +28,8 @@ define IFPLUGD_INSTALL_FIXUP
 	fi
 	$(INSTALL) -m 0755 $(@D)/conf/ifplugd.action \
 		$(TARGET_DIR)/etc/ifplugd/
+
+	mkdir -p $(TARGET_DIR)/etc/init.d
 	$(INSTALL) -m 0755 $(@D)/conf/ifplugd.init \
 		$(TARGET_DIR)/etc/init.d/S45ifplugd
 	# don't use bash for init script

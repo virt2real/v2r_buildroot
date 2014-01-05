@@ -38,6 +38,7 @@ define MYSQL_CLIENT_REMOVE_TEST_PROGS
 endef
 
 define MYSQL_CLIENT_ADD_MYSQL_LIB_PATH
+	mkdir -p $(TARGET_DIR)/etc
 	echo "/usr/lib/mysql" >> $(TARGET_DIR)/etc/ld.so.conf
 endef
 

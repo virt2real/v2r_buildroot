@@ -14,6 +14,7 @@ TFTPD_CONF_OPT += --without-ipv6
 endif
 
 define TFTPD_INSTALL_TARGET_CMDS
+	mkdir -p $(TARGET_DIR)/etc/init.d
 	$(INSTALL) -D $(@D)/tftpd/tftpd $(TARGET_DIR)/usr/sbin/tftpd
 	$(INSTALL) -D package/tftpd/S80tftpd-hpa $(TARGET_DIR)/etc/init.d/
 endef
