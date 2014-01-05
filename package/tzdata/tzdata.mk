@@ -41,6 +41,9 @@ define TZDATA_INSTALL_TARGET_CMDS
 	for zone in posix/*; do                 \
 	    ln -sfn "$${zone}" "$${zone##*/}";    \
 	done
+
+	mkdir -p $(TARGET_DIR)/etc
+	ln -s /usr/share/zoneinfo/Europe/Moscow $(TARGET_DIR)/etc/localtime
 endef
 
 $(eval $(generic-package))
