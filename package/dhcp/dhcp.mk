@@ -29,7 +29,9 @@ define DHCP_INSTALL_SERVER
 	$(INSTALL) -m 0755 -D package/dhcp/S80dhcp-server \
 		$(TARGET_DIR)/etc/init.d/S80dhcp-server
 	$(INSTALL) -m 0644 -D package/dhcp/dhcpd.conf \
-		$(TARGET_DIR)/etc/dhcp/dhcpd.conf
+		$(TARGET_DIR)/etc/dhcpd.conf
+	$(INSTALL) -m 0644 -D package/dhcp/dhcpd.conf.sample \
+		$(TARGET_DIR)/etc/dhcpd.conf.sample
 endef
 endif
 
@@ -51,7 +53,7 @@ define DHCP_INSTALL_CLIENT
 	$(INSTALL) -m 0755 -D $(DHCP_DIR)/client/dhclient \
 		$(TARGET_DIR)/usr/sbin/dhclient
 	$(INSTALL) -m 0644 -D package/dhcp/dhclient.conf \
-		$(TARGET_DIR)/etc/dhcp/dhclient.conf
+		$(TARGET_DIR)/etc/dhclient.conf
 	$(INSTALL) -m 0755 -D package/dhcp/dhclient-script \
 		$(TARGET_DIR)/sbin/dhclient-script
 endef
