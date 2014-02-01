@@ -1,0 +1,14 @@
+config BR2_PACKAGE_LTWHEELCONF
+        bool "ltwheelconf"
+        help
+          This tool allows you to change various settings of the Logitech racing wheels
+          -> Driving Force
+          -> Momo Racing
+          -> Momo Force
+          -> Driving Force Pro
+          -> Driving Force GT
+          -> G25
+          -> G27
+
+          https://github.com/TripleSpeeder/LTWheelConf
+
