@@ -1,0 +1,19 @@
+--- a/utils/Makefile
++++ b/utils/Makefile
+***************
+*** 27,33 ****
+  
+  CFLAGS		?= -g -O2 -Wall
+  
+! PROGRAMS	= inputattach jstest jscal fftest ffmvforce ffset \
+  		  ffcfstress jscal-restore jscal-store
+  
+  PREFIX          ?= /usr/local
+--- 27,33 ----
+  
+  CFLAGS		?= -g -O2 -Wall
+  
+! PROGRAMS	= inputattach jstest jscal fftest ffset \
+  		  ffcfstress jscal-restore jscal-store
+  
+  PREFIX          ?= /usr/local

@@ -1,0 +1,9 @@
+config BR2_PACKAGE_LINUXCONSOLETOOLS
+	bool "linuxconsoletools"
+	help
+	    This package contains the following utilities and associated
+	    documentation:
+	    * inputattach - connects legacy serial devices to the input layer
+	    * joystick utilities - calibrate and test joysticks and joypads
+
+	     http://sourceforge.net/projects/linuxconsole/files/
