@@ -4,48 +4,49 @@
 *** 1,20 ****
   OBJS=main.o wheelfunctions.o wheels.o
   LIBS=usb-1.0
-
+  
   all: ltwheelconf
-
+  
   ltwheelconf: $(OBJS)
-!       gcc -Wall -l$(LIBS) -g3 -o ltwheelconf $(OBJS)
-
+! 	gcc -Wall -l$(LIBS) -g3 -o ltwheelconf $(OBJS)
+  
   main.o: main.c
-!       gcc -Wall -c main.c
-
+! 	gcc -Wall -c main.c
+  
   wheels.o: wheels.c wheels.h
-!       gcc -Wall -c wheels.c
-
-
+! 	gcc -Wall -c wheels.c
+  
+  
   wheelfunctions.o: wheelfunctions.c wheelfunctions.h wheels.h
-!       gcc -Wall -c wheelfunctions.c
-
+! 	gcc -Wall -c wheelfunctions.c
+  
   clean:
-        rm -rf ltwheelconf $(OBJS)
+  	rm -rf ltwheelconf $(OBJS)
 --- 1,27 ----
   OBJS=main.o wheelfunctions.o wheels.o
   LIBS=usb-1.0
-
+  
 + #CROSSCOMPILE?=/opt1/cleanSDK/codesourcery/arm-2013.05/bin/arm-none-linux-gnueabi-
 + CC= $(CROSSCOMPILE)gcc
 + OBJCOPY= $(CROSSCOMPILE)objcopy
 + OBJDUMP= $(CROSSCOMPILE)objdump
 + CFLAGS=-I$(TARGET_DIR)/usr/include -L$(TARGET_DIR)/usr/lib
-+
++ 
   all: ltwheelconf
-
+  
   ltwheelconf: $(OBJS)
-!       $(CC) $(CFLAGS)  -l$(LIBS) -g3 -o ltwheelconf $(OBJS)
-
+! 	$(CC) $(CFLAGS)  -l$(LIBS) -g3 -o ltwheelconf $(OBJS)
+  
   main.o: main.c
-!       $(CC) $(CFLAGS)  -c main.c
-
+! 	$(CC) $(CFLAGS)  -c main.c
+  
   wheels.o: wheels.c wheels.h
-!       $(CC) $(CFLAGS)  -c wheels.c
-
-
+! 	$(CC) $(CFLAGS)  -c wheels.c
+  
+  
   wheelfunctions.o: wheelfunctions.c wheelfunctions.h wheels.h
-!       $(CC) $(CFLAGS)  -c wheelfunctions.c
-
+! 	$(CC) $(CFLAGS)  -c wheelfunctions.c
+  
   clean:
-        rm -rf ltwheelconf $(OBJS)
+  	rm -rf ltwheelconf $(OBJS)
++ 
