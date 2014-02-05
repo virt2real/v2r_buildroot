@@ -45,6 +45,9 @@ endif
 define UDEV_INSTALL_INITSCRIPT
 	mkdir -p $(TARGET_DIR)/etc/init.d
 	$(INSTALL) -m 0755 package/udev/S10udev $(TARGET_DIR)/etc/init.d/S10udev
+	mkdir -p $(TARGET_DIR)/etc/udev/rules.d
+        $(INSTALL) -m 0755 package/udev/rules.d/* $(TARGET_DIR)/etc/udev/rules.d
+
 endef
 
 UDEV_POST_INSTALL_TARGET_HOOKS += UDEV_INSTALL_INITSCRIPT

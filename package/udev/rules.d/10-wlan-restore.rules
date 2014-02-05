@@ -1,0 +1,2 @@
+KERNEL=="wlan0", RUN+="/etc/virt2real/wlanrestore.sh"
+
