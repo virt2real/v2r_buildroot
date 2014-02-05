@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# Switch 3G modems
+#
+
+case "$1" in
+  start)
+	usb_modeswitch -v 0x12d1 -p 0x1446 -P 0x12d1 -V 0x1506 -M "55534243123456780000000000000011062000000100000000000000000000" -n 1 -m 0x01 -Q &
+	;;
+  stop)
+	;;
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
