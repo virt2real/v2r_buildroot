@@ -1,0 +1,5 @@
+# save connection status for web-admin access
+
+echo "$PPP_IFACE $PPP_TTY $PPP_SPEED $PPP_LOCAL $PPP_REMOTE $PPP_IPPARAM" >> /tmp/pppstate
+/etc/virt2real/log "pppd connected"
+

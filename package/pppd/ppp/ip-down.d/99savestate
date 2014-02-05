@@ -1,0 +1,5 @@
+# save connection status for web-admin access
+
+echo "" >> /tmp/pppstate
+
+/etc/virt2real/log "pppd disconnected"

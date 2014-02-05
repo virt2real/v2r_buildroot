@@ -1,0 +1,9 @@
+#!/bin/sh
+
+ACTUALCONF=/etc/resolv.conf
+
+if [ -x /bin/resolvconf ] ; then
+	resolvconf -d $PPP_IFACE
+elif [ -f $ACTUALCONF.ppporig ] ; then
+	mv $ACTUALCONF.ppporig $ACTUALCONF
+fi

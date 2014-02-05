@@ -1,0 +1,8 @@
+file /etc/ppp/options
+
+#
+# Chat scripts
+#
+connect "/usr/sbin/chat -v -t15 -f /etc/ppp/chatscripts/megafon.chat"
+disconnect "/usr/sbin/chat -f /etc/ppp/chatscripts/megafon-disconnect.chat"
+

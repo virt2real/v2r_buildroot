@@ -1,0 +1,22 @@
+#!/bin/sh
+ACTUALCONF=/etc/resolv.conf
+PPPCONF=/etc/ppp/resolv.conf
+PPP_IFACE=ppp0
+
+#rm $ACTUALCONF
+#cp $PPPCONF $ACTUALCONF
+
+#rm /etc/resolv.conf
+#cp /var/run/ppp/resolv.conf /etc/resolv.conf
+
+if [ -x /bin/resolvconf ] ; then
+	cat $PPPCONF | resolvconf -a $PPP_IFACE
+elif [ -f $PPPCONF ] ; then
+	if [ -f $ACTUALCONF ] ; then
+		if [ ! -h $ACTUALCONF -o ! "`readlink $ACTUALCONF 2>&1`" = "$PPPCONF" ] ; then
+			mv $ACTUALCONF $ACTUALCONF.ppporig
+		fi
+	fi
+
+	ln -sf $PPPCONF $ACTUALCONF
+fi
