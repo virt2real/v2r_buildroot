@@ -22,12 +22,12 @@ case "$1" in
   start)
 	if [ -x $NTPDATE_BIN ] ; then
 		echo -n "Getting initial time via ntp"
-		$NTPDATE_BIN $NTPDATE_OPTS $NTPSERVERS > /dev/null 2>&1
+		$NTPDATE_BIN $NTPDATE_OPTS $NTPSERVERS > /dev/null 2>&1 &
 		echo "."
 	fi
 
 	echo -n "Starting $DESC: $NAME"
-	start-stop-daemon -S -q -x $DAEMON
+	$DAEMON -q -g > /dev/null 2>&1 &
 	echo "."
 	;;
   stop) echo -n "Stopping $DESC: $NAME"

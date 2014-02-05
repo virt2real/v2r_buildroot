@@ -1,5 +1,5 @@
 # NTP Servers to use for ntpdate
-NTPSERVERS="pool.ntp.org"
+NTPSERVERS="pool.ntp.org time.nist.gov ntp.ix.ru"
 
 # Get initial time via ntpdate?
 NTPDATE=no

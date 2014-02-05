@@ -59,6 +59,9 @@ define NTP_INSTALL_TARGET_CMDS
 		install -m 755 -d $(TARGET_DIR)/etc/default ; \
 		install -m 644 package/ntp/ntpd.etc.default $(TARGET_DIR)/etc/default/ntpd ; \
 	fi
+
+	install -m 644 package/ntp/ntp.conf $(TARGET_DIR)/etc/ntp.conf
+
 endef
 
 define NTP_UNINSTALL_TARGET_CMDS
@@ -66,6 +69,7 @@ define NTP_UNINSTALL_TARGET_CMDS
 	rm -f $(addprefix $(TARGET_DIR)/usr/bin/,$(NTP_INSTALL_FILES_y))
 	rm $(TARGET_DIR)/etc/init.d/S49ntp
 	rm $(TARGET_DIR)/etc/default/ntpd
+	rm $(TARGET_DIR)/etc/ntp.conf
 endef
 
 NTP_POST_PATCH_HOOKS += NTP_PATCH_FIXUPS
