@@ -207,11 +207,8 @@ define PHP_INSTALL_FIXUP
 	rm -f $(TARGET_DIR)/usr/bin/phpize
 	mkdir -p $(TARGET_DIR)/etc
 	mkdir -p $(TARGET_DIR)/etc/init.d
-	if [ ! -f $(TARGET_DIR)/etc/php.ini ]; then \
-		$(INSTALL) -m 0755  $(PHP_DIR)/php.ini-production \
-			$(TARGET_DIR)/etc/php.ini; \
-	fi
 
+	$(INSTALL) -m 0755  package/php/php.ini $(TARGET_DIR)/etc/php.ini
 	$(INSTALL) -D -m 0755 package/php/S45php-cgi $(TARGET_DIR)/etc/init.d/
 
 endef
