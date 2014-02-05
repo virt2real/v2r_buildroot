@@ -431,13 +431,13 @@ TARGET_SKELETON=$(BR2_ROOTFS_SKELETON_CUSTOM_PATH)
 endif
 
 $(BUILD_DIR)/.root:
-	$(V)mkdir -p $(TARGET_DIR)
-	$(V)rsync -a \
+	mkdir -p $(TARGET_DIR)
+	rsync -a \
 		--exclude .empty --exclude .svn --exclude .git \
 		--exclude .hg --exclude=CVS --exclude '*~' \
 		$(TARGET_SKELETON)/ $(TARGET_DIR)/
-	$(V)cp support/misc/target-dir-warning.txt $(TARGET_DIR_WARNING_FILE)
-	$(V)touch $@
+	cp support/misc/target-dir-warning.txt $(TARGET_DIR_WARNING_FILE)
+	touch $@
 
 $(TARGET_DIR): $(BUILD_DIR)/.root
 
@@ -452,47 +452,47 @@ target-finalize:
 ifeq ($(BR2_HAVE_DEVFILES),y)
 	( support/scripts/copy.sh $(STAGING_DIR) $(TARGET_DIR) )
 else
-	@rm -rf $(TARGET_DIR)/usr/include $(TARGET_DIR)/usr/share/aclocal \
+	rm -rf $(TARGET_DIR)/usr/include $(TARGET_DIR)/usr/share/aclocal \
 		$(TARGET_DIR)/usr/lib/pkgconfig $(TARGET_DIR)/usr/share/pkgconfig \
 		$(TARGET_DIR)/usr/lib/cmake $(TARGET_DIR)/usr/share/cmake
-	@find $(TARGET_DIR)/usr/{lib,share}/ -name '*.cmake' -print0 | xargs -0 rm -f
-	@find $(TARGET_DIR)/lib \( -name '*.a' -o -name '*.la' \) -print0 | xargs -0 rm -f
-	@find $(TARGET_DIR)/usr/lib \( -name '*.a' -o -name '*.la' \) -print0 | xargs -0 rm -f
+	find $(TARGET_DIR)/usr/{lib,share}/ -name '*.cmake' -print0 | xargs -0 rm -f
+	find $(TARGET_DIR)/lib \( -name '*.a' -o -name '*.la' \) -print0 | xargs -0 rm -f
+	find $(TARGET_DIR)/usr/lib \( -name '*.a' -o -name '*.la' \) -print0 | xargs -0 rm -f
 endif
 ifneq ($(BR2_PACKAGE_GDB),y)
-	@rm -rf $(TARGET_DIR)/usr/share/gdb
+	rm -rf $(TARGET_DIR)/usr/share/gdb
 endif
 ifneq ($(BR2_HAVE_DOCUMENTATION),y)
-	@rm -rf $(TARGET_DIR)/usr/man $(TARGET_DIR)/usr/share/man
-	@rm -rf $(TARGET_DIR)/usr/info $(TARGET_DIR)/usr/share/info
-	@rm -rf $(TARGET_DIR)/usr/doc $(TARGET_DIR)/usr/share/doc
-	@rm -rf $(TARGET_DIR)/usr/share/gtk-doc
-	@-rmdir $(TARGET_DIR)/usr/share 2>/dev/null
+	rm -rf $(TARGET_DIR)/usr/man $(TARGET_DIR)/usr/share/man
+	rm -rf $(TARGET_DIR)/usr/info $(TARGET_DIR)/usr/share/info
+	rm -rf $(TARGET_DIR)/usr/doc $(TARGET_DIR)/usr/share/doc
+	rm -rf $(TARGET_DIR)/usr/share/gtk-doc
+	-rmdir $(TARGET_DIR)/usr/share 2>/dev/null
 endif
 ifeq ($(BR2_PACKAGE_PYTHON_PY_ONLY),y)
-	@find $(TARGET_DIR)/usr/lib/ -name '*.pyc' -print0 | xargs -0 rm -f
+	find $(TARGET_DIR)/usr/lib/ -name '*.pyc' -print0 | xargs -0 rm -f
 endif
 ifeq ($(BR2_PACKAGE_PYTHON_PYC_ONLY),y)
-	@find $(TARGET_DIR)/usr/lib/ -name '*.py' -print0 | xargs -0 rm -f
+	find $(TARGET_DIR)/usr/lib/ -name '*.py' -print0 | xargs -0 rm -f
 endif
 	$(STRIP_FIND_CMD) | xargs $(STRIPCMD) 2>/dev/null || true
-	@find $(TARGET_DIR)/lib/modules -type f -name '*.ko' | \
+	find $(TARGET_DIR)/lib/modules -type f -name '*.ko' | \
 		xargs -r $(KSTRIPCMD) || true
 
 # See http://sourceware.org/gdb/wiki/FAQ, "GDB does not see any threads
 # besides the one in which crash occurred; or SIGTRAP kills my program when
 # I set a breakpoint"
 ifeq ($(BR2_TOOLCHAIN_HAS_THREADS),y)
-	@find $(TARGET_DIR)/lib -type f -name 'libpthread*.so*' | \
+	find $(TARGET_DIR)/lib -type f -name 'libpthread*.so*' | \
 		xargs $(STRIPCMD) $(STRIP_STRIP_DEBUG) || true
 endif
 
-	@mkdir -p $(TARGET_DIR)/etc
-	@# Mandatory configuration file and auxilliary cache directory
-	@# for recent versions of ldconfig
-	@touch $(TARGET_DIR)/etc/ld.so.conf
-	@mkdir -p $(TARGET_DIR)/var/cache/ldconfig
-	@if [ -x "$(TARGET_CROSS)ldconfig" ]; \
+	mkdir -p $(TARGET_DIR)/etc
+	# Mandatory configuration file and auxilliary cache directory
+	# for recent versions of ldconfig
+	touch $(TARGET_DIR)/etc/ld.so.conf
+	mkdir -p $(TARGET_DIR)/var/cache/ldconfig
+	if [ -x "$(TARGET_CROSS)ldconfig" ]; \
 	then \
 		$(TARGET_CROSS)ldconfig -r $(TARGET_DIR); \
 	else \
@@ -508,7 +508,7 @@ endif
 
 	@$(foreach d, $(call qstrip,$(BR2_ROOTFS_OVERLAY)), \
 		$(call MESSAGE,"Copying overlay $(d)"); \
-		@rsync -a \
+		rsync -a \
 			--exclude .empty --exclude .svn --exclude .git \
 			--exclude .hg --exclude=CVS --exclude '*~' \
 			$(d)/ $(TARGET_DIR)$(sep))

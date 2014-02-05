@@ -44,31 +44,31 @@ ROOTFS_$(2)_DEPENDENCIES += host-fakeroot host-makedevs $$(if $$(BR2_TARGET_ROOT
 
 $$(BINARIES_DIR)/rootfs.$(1): $$(ROOTFS_$(2)_DEPENDENCIES)
 	@$$(call MESSAGE,"Generating root filesystem image rootfs.$(1)")
-	@$$(foreach hook,$$(ROOTFS_$(2)_PRE_GEN_HOOKS),$$(call $$(hook))$$(sep))
-	@rm -f $$(FAKEROOT_SCRIPT)
-	@rm -f $$(TARGET_DIR_WARNING_FILE)
-	@echo "chown -R 0:0 $$(TARGET_DIR)" >> $$(FAKEROOT_SCRIPT)
+	$$(foreach hook,$$(ROOTFS_$(2)_PRE_GEN_HOOKS),$$(call $$(hook))$$(sep))
+	rm -f $$(FAKEROOT_SCRIPT)
+	rm -f $$(TARGET_DIR_WARNING_FILE)
+	echo "chown -R 0:0 $$(TARGET_DIR)" >> $$(FAKEROOT_SCRIPT)
 ifneq ($$(ROOTFS_DEVICE_TABLES),)
-	@cat $$(ROOTFS_DEVICE_TABLES) > $$(FULL_DEVICE_TABLE)
+	cat $$(ROOTFS_DEVICE_TABLES) > $$(FULL_DEVICE_TABLE)
 ifeq ($$(BR2_ROOTFS_DEVICE_CREATION_STATIC),y)
-	@printf '$$(subst $$(sep),\n,$$(PACKAGES_DEVICES_TABLE))' >> $$(FULL_DEVICE_TABLE)
+	printf '$$(subst $$(sep),\n,$$(PACKAGES_DEVICES_TABLE))' >> $$(FULL_DEVICE_TABLE)
 endif
-	@printf '$$(subst $$(sep),\n,$$(PACKAGES_PERMISSIONS_TABLE))' >> $$(FULL_DEVICE_TABLE)
-	@echo "$$(HOST_DIR)/usr/bin/makedevs -d $$(FULL_DEVICE_TABLE) $$(TARGET_DIR)" >> $$(FAKEROOT_SCRIPT)
+	printf '$$(subst $$(sep),\n,$$(PACKAGES_PERMISSIONS_TABLE))' >> $$(FULL_DEVICE_TABLE)
+	echo "$$(HOST_DIR)/usr/bin/makedevs -d $$(FULL_DEVICE_TABLE) $$(TARGET_DIR)" >> $$(FAKEROOT_SCRIPT)
 endif
-	@printf '$(subst $(sep),\n,$(PACKAGES_USERS))' > $(USERS_TABLE)
-	@$(TOPDIR)/support/scripts/mkusers $(USERS_TABLE) $(TARGET_DIR) >> $(FAKEROOT_SCRIPT)
-	@echo "$$(ROOTFS_$(2)_CMD)" >> $$(FAKEROOT_SCRIPT)
-	@chmod a+x $$(FAKEROOT_SCRIPT)
-	@$$(HOST_DIR)/usr/bin/fakeroot -- $$(FAKEROOT_SCRIPT)
-	@cp support/misc/target-dir-warning.txt $$(TARGET_DIR_WARNING_FILE)
+	printf '$(subst $(sep),\n,$(PACKAGES_USERS))' > $(USERS_TABLE)
+	$(TOPDIR)/support/scripts/mkusers $(USERS_TABLE) $(TARGET_DIR) >> $(FAKEROOT_SCRIPT)
+	echo "$$(ROOTFS_$(2)_CMD)" >> $$(FAKEROOT_SCRIPT)
+	chmod a+x $$(FAKEROOT_SCRIPT)
+	$$(HOST_DIR)/usr/bin/fakeroot -- $$(FAKEROOT_SCRIPT)
+	cp support/misc/target-dir-warning.txt $$(TARGET_DIR_WARNING_FILE)
 	-@rm -f $$(FAKEROOT_SCRIPT) $$(FULL_DEVICE_TABLE)
-	@$$(foreach hook,$$(ROOTFS_$(2)_POST_GEN_HOOKS),$$(call $$(hook))$$(sep))
+	$$(foreach hook,$$(ROOTFS_$(2)_POST_GEN_HOOKS),$$(call $$(hook))$$(sep))
 ifeq ($$(BR2_TARGET_ROOTFS_$(2)_GZIP),y)
-	@gzip -9 -c $$@ > $$@.gz
+	gzip -9 -c $$@ > $$@.gz
 endif
 ifeq ($$(BR2_TARGET_ROOTFS_$(2)_BZIP2),y)
-	@bzip2 -9 -c $$@ > $$@.bz2
+	bzip2 -9 -c $$@ > $$@.bz2
 endif
 ifeq ($$(BR2_TARGET_ROOTFS_$(2)_LZMA),y)
 	$$(LZMA) -9 -c $$@ > $$@.lzma
