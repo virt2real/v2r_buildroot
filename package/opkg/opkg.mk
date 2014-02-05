@@ -17,6 +17,10 @@ OPKG_DEPENDENCIES = host-pkgconf
 # Ensure directory for lockfile exists
 define OPKG_CREATE_LOCKDIR
 	mkdir -p $(TARGET_DIR)/usr/lib/opkg
+
+	mkdir -p $(TARGET_DIR)/etc/opkg
+	$(INSTALL) -m 0755 package/opkg/opkg.conf $(TARGET_DIR)/etc/opkg/
+
 endef
 
 OPKG_POST_INSTALL_TARGET_HOOKS += OPKG_CREATE_LOCKDIR
