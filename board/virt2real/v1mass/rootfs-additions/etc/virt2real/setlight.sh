@@ -18,11 +18,15 @@ esac
 
 case "$1" in
 green)
-        echo "set gpio73 output:$VALUE" > /dev/v2r_gpio
-        echo "Set green $VALUE"
+        echo "set gpio 73 output $VALUE" > /dev/v2r_gpio
+        echo "set green $VALUE"
 	;;
 red)
-        echo "set gpio74 output:$VALUE" > /dev/v2r_gpio
-        echo "Set green $VALUE"
+        echo "set gpio 74 output $VALUE" > /dev/v2r_gpio
+        echo "set red $VALUE"
+	;;
+blue)
+        echo "set rto 3 $VALUE" > /dev/v2r_gpio
+        echo "set blue $VALUE"
 	;;
 esac

@@ -25,7 +25,7 @@ fi
 modprobe uap8xxx.ko
 
 # config interface
-ifup uap0
+ifup uap0 -f
 
 # start Marvell SoftAP daemon
 uaputl sys_cfg_ssid "$SSID"
@@ -35,3 +35,4 @@ uaputl sys_cfg_cipher 8 8
 uaputl sys_cfg_channel 0 1
 uaputl bss_start
 
+/etc/virt2real/log "uaputl: access point created"

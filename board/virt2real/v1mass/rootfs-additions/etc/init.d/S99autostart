@@ -1,2 +1,2 @@
 #!/bin/sh
-sh /etc/virt2real/autostart.sh
+/etc/virt2real/autostart.sh &
