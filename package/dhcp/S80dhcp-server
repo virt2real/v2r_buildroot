@@ -6,12 +6,11 @@
 # On what interfaces should the DHCP server (dhcpd) serve DHCP requests?
 #       Separate multiple interfaces with spaces, e.g. "eth0 eth1".
 
-INTERFACES="uap0"
+INTERFACES="uap0 wlan0 usb0"
 
 test ! -f /usr/sbin/dhcpd && exit 0
 
-AP=`cat /proc/cmdline | grep "ap=on"`
-if [ "$AP" = "" ] ; then
+if [ ! -f /tmp/accesspoint ] ; then
   exit
 fi
 
