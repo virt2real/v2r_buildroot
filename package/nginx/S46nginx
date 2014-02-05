@@ -9,9 +9,15 @@ test -x $DAEMON || exit 0
 
 set -e
 
+mkdir -p /var/log/nginx/ > /dev/null 2>&1
+
 case "$1" in
 start)
 echo -n "Starting $DESC: "
+
+rm -R /var/media/hls > /dev/null 2>&1
+mkdir -p /var/media/hls > /dev/null 2>&1
+
 start-stop-daemon --start --quiet --pidfile /tmp/nginx.pid --exec $DAEMON -- $DAEMON_OPTS
 echo "$NAME."
 ;;

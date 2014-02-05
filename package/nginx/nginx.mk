@@ -100,6 +100,7 @@ define NGINX_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/etc/nginx
 	mkdir -p $(TARGET_DIR)/etc/init.d
 	mkdir -p $(TARGET_DIR)/var/www
+	mkdir -p $(TARGET_DIR)/var/media/hls
 	mkdir -p $(TARGET_DIR)/var/log/nginx
 	$(INSTALL) -D -m 0755 $(@D)/objs/nginx $(TARGET_DIR)/usr/sbin/nginx
 	$(INSTALL) -D -m 0644 $(@D)/conf/* $(TARGET_DIR)/etc/nginx/
