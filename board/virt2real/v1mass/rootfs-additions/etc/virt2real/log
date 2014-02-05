@@ -1,0 +1,3 @@
+#!/bin/sh
+echo `date '+%H:%M:%S'` $1 >> /var/log/messages
+

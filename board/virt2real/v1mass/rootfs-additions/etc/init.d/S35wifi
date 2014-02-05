@@ -1,0 +1,91 @@
+#!/bin/sh
+#
+# Start the onboard Wi-Fi
+#
+
+# Check uEnv parameter "wifi=on"
+WIFI=`cat /proc/cmdline | grep " wifi=on"`
+
+if [ ! "$WIFI" == "" ]; then
+    echo "Wi-Fi onboard module enabled"
+else
+    echo "Wi-Fi onboard module disabled"
+    
+fi
+
+# Check uEnv parameter "wifi=on"
+USBWIFI=`cat /proc/cmdline | grep " usbwifi=on"`
+
+if [ ! "$USBWIFI" == "" ]; then
+    echo "USB Wi-Fi module enabled"
+else
+    echo "USB Wi-Fi module disabled"
+    
+fi
+
+
+case "$1" in
+  start)
+
+	if [ -f /tmp/accesspoint ] ; then
+		rm -f /tmp/accesspoint > /dev/null
+	fi
+
+	# Check uEnv parameter "ap=on"
+	AP=`cat /proc/cmdline | grep "ap=on"`
+
+	if [ ! "$AP" == "" ] ; then 
+		touch /tmp/accesspoint
+	fi
+
+	# and check pin selection for access point
+	echo 1 > /proc/v2r_pins/75
+	echo 0 > /proc/v2r_pins/76
+	echo "set con 76 input" > /dev/v2r_pins
+
+	AP_PIN=`cat /proc/v2r_pins/76`
+	echo 0 > /proc/v2r_pins/75
+
+	if [ ! "$AP_PIN" == "0" ] ; then 
+		touch /tmp/accesspoint
+	fi
+
+
+	# if access point is active - start it
+	if [ -f /tmp/accesspoint ] ; then
+
+		if [ ! "$WIFI" = "" ] ; then 
+			echo "Starting onboard acces point..."
+			/etc/virt2real/ap.sh /etc/softap.conf &
+		fi
+
+		if [ ! "$USBWIFI" = "" ] ; then 
+			echo "Starting USB acces point..."
+			/etc/virt2real/ap_usb.sh &
+		fi
+
+		exit 0
+	fi
+
+
+	echo "Starting Wi-Fi client..."
+	/etc/virt2real/wlan.sh &
+	
+	;;
+  stop)
+	echo -n "Stopping Wi-Fi..."
+	killall wpa_supplicant
+	killall wpa_cli
+	;;
+	
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+
