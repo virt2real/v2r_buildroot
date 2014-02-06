@@ -1,5 +1,7 @@
 #!/bin/sh
 
+modprobe lib80211.ko
+
 # config interface
 ifup wlan0 -f
 

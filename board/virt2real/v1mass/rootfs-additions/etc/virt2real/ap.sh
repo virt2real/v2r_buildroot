@@ -21,6 +21,8 @@ if [ "$PASSPHRASE" == "" ] ; then
   exit 1
 fi
 
+modprobe lib80211.ko
+
 # load Marvell SoftAP driver module
 modprobe uap8xxx.ko
 
