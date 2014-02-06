@@ -1,0 +1,4 @@
+config BR2_PACKAGE_VIRT2REAL_NODEJS_MODULES
+	bool "virt2real_nodejs_modules"
+	help
+	    NodeJS libraries for Virt2real board
