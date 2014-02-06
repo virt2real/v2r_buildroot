@@ -94,6 +94,10 @@ done
 # syncing (may be a long time)
 sync
 
+# unmount
+umount $ROOTFS_DST
+rmdir  $ROOTFS_DST
+
 # turn off blinking red LED
 echo "none" > "/sys/class/leds/v2r:red:user/trigger"
 
