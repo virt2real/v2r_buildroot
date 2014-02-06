@@ -1,41 +1,52 @@
 #!/bin/sh
 
-echo "found USB media device" > /tmp/systemmessage
+WWW_ROOT=/var/www
+THUMB_DIR=$WWW_ROOT/modules/gphotoview/thumbnails
+CAMERA_DIR=/media/camera
+CAMERA_LINK=$WWW_ROOT/modules/gphotofs/camera
+
+/etc/virt2real/log "found USB media device"
 
 #Make Directory if it doesn't exist
-if [ ! -d /media/camera ]; then
-      /bin/mkdir /media/camera
+if [ ! -d $CAMERA_DIR ] ; then
+    mkdir -p $CAMERA_DIR
 fi
 
+
 # If something already mounted, dismount it
-if grep -qs '/media/camera ' /proc/mounts; then
-      /bin/umount /media/camera
+if grep -qs "$CAMERA_DIR" /proc/mounts ; then
+    /bin/umount $CAMERA_DIR
 fi
 
 # Mount the camera
-/usr/bin/gphotofs /media/camera
+gphotofs $CAMERA_DIR
 if [ $? == 0 ] ; then
-    echo "USB media device mounted" > /tmp/systemmessage
+    /etc/virt2real/log "USB media device mounted"
 else
-    echo "" > /tmp/systemmessage
     exit 1
 fi
+
+@ln -s $CAMERA_DIR $CAMERA_LINK
 
 # load previews for admin panel
-cd /var/www/modules/gphotoview/thumbnails
-echo "loading USB media device thumbnails..." > /tmp/systemmessage
+
+if [ ! -d $THUMB_DIR ] ; then
+    mkdir -p $THUMB_DIR
+fi
+
+cd $THUMB_DIR
+
+/etc/virt2real/log "loading USB media device thumbnails..."
 
 yes | gphoto2 --get-all-thumbnails
-if [ $? == 0 ] ; then
-    echo "USB media device thumbnails loaded" > /tmp/systemmessage
-    echo 'if (LoadDir) LoadDir("", "/var/www/modules/gphotoview/thumbnails");' > /tmp/systemaction
-else
-    echo "" > /tmp/systemmessage
-    exit 1
-fi
+#if [ $? == 0 ] ; then
+#    /etc/virt2real/log "USB media device thumbnails loaded"
+#else
+#    exit 1
+#fi
 
 MANUFACTURER=`gphoto2 --get-config /main/status/manufacturer | grep Current | sed  's%Current: %%' `
 MODEL=`gphoto2 --get-config /main/status/cameramodel  | grep Current | sed  's%Current: %%' `
-echo $MANUFACTURER $MODEL connected > /tmp/systemmessage
+/etc/virt2real/log "$MANUFACTURER $MODEL connected"
 
 exit 0

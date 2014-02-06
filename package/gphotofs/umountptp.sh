@@ -1,12 +1,14 @@
 #!/bin/sh
 
+WWW_ROOT=/var/www
+
 # remove all previews from admin panel
-echo "clear all thumbnails for USB media device..." > /tmp/systemmessage
-rm -f /var/www/modules/gphotoview/thumbnails/*
-echo "all thumbnails for USB media device cleared" > /tmp/systemmessage
+/etc/virt2real/log "clear all thumbnails for USB media device..."
+rm -f $WWW_ROOT/modules/gphotoview/thumbnails/*
+/etc/virt2real/log "all thumbnails for USB media device cleared"
 
 # If its still mounted, then dismount it
-if grep -qs '/media/camera ' /proc/mounts; then
+if grep -qs "/media/camera " /proc/mounts ; then
       umount /media/camera
-      echo "USB media device unmounted" > /tmp/systemmessage
+      /etc/virt2real/log "USB media device unmounted"
 fi
