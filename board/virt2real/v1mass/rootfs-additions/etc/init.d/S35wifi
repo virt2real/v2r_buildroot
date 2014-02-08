@@ -3,6 +3,9 @@
 # Start the onboard Wi-Fi
 #
 
+AP_PWR_PIN=75
+AP_READ_PIN=76
+
 # Check uEnv parameter "wifi=on"
 WIFI=`cat /proc/cmdline | grep " wifi=on"`
 
@@ -39,12 +42,11 @@ case "$1" in
 	fi
 
 	# and check pin selection for access point
-	echo 1 > /proc/v2r_pins/75
-	echo 0 > /proc/v2r_pins/76
-	echo "set con 76 input" > /dev/v2r_pins
-
-	AP_PIN=`cat /proc/v2r_pins/76`
-	echo 0 > /proc/v2r_pins/75
+	echo 1 > /proc/v2r_pins/$AP_PWR_PIN
+	echo 0 > /proc/v2r_pins/$AP_READ_PIN
+	echo "set con $AP_READ_PIN input" > /dev/v2r_pins
+	AP_PIN=`cat /proc/v2r_pins/$AP_READ_PIN`
+	echo 0 > /proc/v2r_pins/$AP_PWR_PIN
 
 	if [ ! "$AP_PIN" == "0" ] ; then 
 		touch /tmp/accesspoint
