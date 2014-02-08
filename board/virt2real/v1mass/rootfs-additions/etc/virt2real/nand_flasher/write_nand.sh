@@ -65,11 +65,18 @@ led_off () {
 
 
 bootloader_write () {
+	echo "Writing bootloader"
+
 	# unzip bootloader image
 	gzip -cd $DUMPNAME.gz> ./dump
 
+	# clear bootloader partition
+	flash_erase /dev/mtd0 0 0
+
 	# write UBL and U-boot image to bootloader NAND partition
 	nandwrite -no /dev/mtd0 ./dump
+
+	sync
 
 	# remove dump
 	rm ./dump
@@ -77,6 +84,9 @@ bootloader_write () {
 
 
 kernel_write () {
+
+	echo "Clear kernel NAND partition"
+
 	# clear kernel NAND partition
 	flash_erase /dev/mtd$KERNEL_NAND_ID 0 0
 
@@ -85,6 +95,7 @@ kernel_write () {
 	mount /dev/mmcblk0p1 /mnt/mmc
 
 	# write kernel to NAND
+	echo "Write kernel to NAND"
 	nandwrite -p /dev/mtd$KERNEL_NAND_ID /mnt/mmc/uImage
 
 	# unmount and delete kernel MMC partition
@@ -98,6 +109,8 @@ kernel_write () {
 
 fs_format_jffs () {
 
+	echo "Clear rootfs NAND partition"
+
 	# clear rootfs NAND partition
 	flash_erase /dev/mtd$ROOTFS_NAND_ID 0 0
 
@@ -106,16 +119,22 @@ fs_format_jffs () {
 
 	# mount rootfs NAND partition
 	mount -t jffs2 /dev/mtdblock$ROOTFS_NAND_ID $ROOTFS_DST
+
+	echo "JFFS partition mounted"
 }
 
 
 fs_format_ubi () {
+
+	echo "Clear rootfs NAND partition"
 
 	# clear rootfs NAND partition
 	flash_erase /dev/mtd$ROOTFS_NAND_ID 0 0
 
 	# make directory for mounting
 	mkdir -p $ROOTFS_DST
+
+	echo "Formatting UBI NAND partition"
 
 	ubiformat /dev/mtd$ROOTFS_NAND_ID -s 512 -O 2048
 	ubiattach /dev/ubi_ctrl -m 2 -O 2048
@@ -126,6 +145,8 @@ fs_format_ubi () {
 
 
 fs_write () {
+
+	echo "Writing rootfs to NAND"
 
 	# make not regular directories
 	mkdir -p $ROOTFS_DST/dev
