@@ -1,5 +1,8 @@
 # ~/.bashrc: executed by bash(1) for non-login interactive shells.
 
+# for MC
+export SHELL=/bin/bash
+
 export PATH=\
 /bin:\
 /sbin:\
