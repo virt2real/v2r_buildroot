@@ -22,8 +22,9 @@ define HOST_NODEJS_CONFIGURE_CMDS
 	# the nodejs source distribution.  This is needed on the host because
 	# NPM is non-functional without it, and host-openssl isn't part of
 	# buildroot.
+	export PYTHONPATH="$(HOST_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages"
 	(cd $(@D); \
-                ./configure \
+		$(HOST_DIR)/usr/bin/python ./configure \
 		--prefix=$(HOST_DIR)/usr \
 		--without-snapshot \
 		--without-dtrace \
