@@ -208,4 +208,12 @@ esac
 
 fs_write
 fs_unmount
+
+# deattach UBI device
+if [ "$1" == "ubi" ] ; then
+    ubidetach -d 0
+fi
+
 led_off
+
+/etc/virt2real/log "NAND write done"
