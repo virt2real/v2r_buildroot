@@ -13,6 +13,9 @@ if [ ! "$CMDLINE" == "" ] ; then
     # virt2real legacy WiFi
     modprobe libertas
     modprobe libertas_sdio
+    
+    #modprobe libertas_tf.ko 
+    #modprobe libertas_tf_sdio.ko
 
 fi
 
