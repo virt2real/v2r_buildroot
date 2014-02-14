@@ -1,0 +1,8 @@
+config BR2_PACKAGE_BABELD
+	bool "Babel daemon"
+	help
+	    Babel is a loop-avoiding distance-vector routing protocol roughly
+	    based on HSDV and AODV, but with provisions for link cost estimation
+	    and redistribution of routes from other routing protocols.
+
+	    https://github.com/jech/babeld
