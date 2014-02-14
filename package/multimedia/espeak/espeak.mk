@@ -30,6 +30,12 @@ define ESPEAK_EXTRACT_CMDS
 	#mv $(@D)/espeak-$(ESPEAK_VERSION)-source/* $(@D)
 	mv $(@D)/espeak-$(ESPEAK_VERSION_MAJOR).01-source/* $(@D)
 	$(RM) -r $(@D)/espeak-$(ESPEAK_VERSION)-source
+
+	# download russian dictionary
+	wget http://espeak.sourceforge.net/data/ru_dict-47.zip -O $(DL_DIR)/ru_dict-47.zip
+	rm -f $(@D)/espeak-data/ru_dict
+	unzip -o $(DL_DIR)/ru_dict-47.zip -d $(@D)/espeak-data/
+	sleep 10
 endef
 
 define ESPEAK_CONFIGURE_CMDS
