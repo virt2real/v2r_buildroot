@@ -1,0 +1,4 @@
+config BR2_PACKAGE_SPEECH
+	bool "virt2real speech scripts"
+	help
+	    Speech scripts for Virt2real board

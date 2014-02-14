@@ -1,0 +1,4 @@
+menu "Virt2real additional packages"
+source "package/virt2real/speech/Config.in"
+source "package/virt2real/nodejs_modules/Config.in"
+endmenu

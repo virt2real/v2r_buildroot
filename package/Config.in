@@ -5,6 +5,9 @@ source "package/busybox/Config.in"
 # Audio and video applications
 source "package/multimedia/Config.in"
 
+# Virt2real additional packages
+source "package/virt2real/Config.in"
+
 menu "Compressors and decompressors"
 source "package/bzip2/Config.in"
 if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
@@ -322,7 +325,6 @@ source "package/xavante/Config.in"
 endmenu
 endif
 source "package/nodejs/Config.in"
-source "package/virt2real_nodejs_modules/Config.in"
 source "package/perl/Config.in"
 if BR2_PACKAGE_PERL
 menu "Perl libraries/modules"
