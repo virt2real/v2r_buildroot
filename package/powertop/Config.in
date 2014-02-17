@@ -1,0 +1,4 @@
+config BR2_PACKAGE_POWERTOP
+	bool "powertop"
+	help
+	https://github.com/vickylinuxer/powertop
