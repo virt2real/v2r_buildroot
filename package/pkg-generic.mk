@@ -174,6 +174,13 @@ $(BUILD_DIR)/%/.stamp_xpackage_installed:
 	@$(call MESSAGE,"Installing to package")
 	-rm -Rf $(TARGET_DIR)
 	mkdir -p $(TARGET_DIR)
+
+	$(if $(BR2_INIT_SYSTEMD),\
+		$($(PKG)_INSTALL_INIT_SYSTEMD))
+
+	$(if $(BR2_INIT_SYSV)$(BR2_INIT_BUSYBOX),\
+		$($(PKG)_INSTALL_INIT_SYSV))
+
 	$($(PKG)_INSTALL_TARGET_CMDS)
 	$(foreach hook,$($(PKG)_POST_INSTALL_TARGET_HOOKS),$(call $(hook))$(sep))
 # 	$(Q)touch $@
