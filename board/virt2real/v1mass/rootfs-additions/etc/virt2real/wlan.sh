@@ -2,8 +2,6 @@
 
 INTERFACE=wlan0
 
-modprobe lib80211.ko
-
 # load wireless modules drivers
 
 # Check uEnv parameter " wifi=on" (with leading space) - legacy wi-fi
