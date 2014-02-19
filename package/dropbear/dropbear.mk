@@ -73,6 +73,8 @@ DROPBEAR_CONF_OPT += --disable-lastlog
 endif
 
 define DROPBEAR_INSTALL_TARGET_CMDS
+	$(INSTALL) -d $(TARGET_DIR)/usr/sbin
+	$(INSTALL) -d $(TARGET_DIR)/usr/bin
 	$(INSTALL) -m 755 $(@D)/dropbearmulti $(TARGET_DIR)/usr/sbin/dropbear
 	for f in $(DROPBEAR_TARGET_BINS); do \
 		ln -snf ../sbin/dropbear $(TARGET_DIR)/usr/bin/$$f ; \
