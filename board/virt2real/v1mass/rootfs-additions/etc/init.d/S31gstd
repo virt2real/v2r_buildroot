@@ -1,0 +1,21 @@
+#!/bin/sh -e
+
+case "$1" in
+start)
+    echo "Starting GStreamer Daemon"
+    /usr/bin/gstd --system &
+    ;;
+
+stop)
+    echo "Stoping GStreamer Daemon"
+    killall gstd
+    ;;
+
+*)
+    echo "Usage: /etc/init.d/gstd {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
