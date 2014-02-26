@@ -23,6 +23,7 @@ define LIBLOCKFILE_INSTALL_STAGING_CMDS
 endef
 
 define LIBLOCKFILE_INSTALL_TARGET_CMDS
+	install -d $(TARGET_DIR)/usr/lib
 	cp -a $(STAGING_DIR)/usr/lib/liblockfile.so* $(TARGET_DIR)/usr/lib
 endef
 
