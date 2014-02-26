@@ -30,5 +30,8 @@ source "package/multimedia/tidsp-binaries/Config.in"
 source "package/multimedia/vorbis-tools/Config.in"
 source "package/multimedia/wavpack/Config.in"
 source "package/multimedia/sox/Config.in"
+source "package/multimedia/gstd/Config.in"
+#source "package/multimedia/ipiped/Config.in"
+#source "package/multimedia/gst-usb/Config.in"
 source "package/yavta/Config.in"
 endmenu

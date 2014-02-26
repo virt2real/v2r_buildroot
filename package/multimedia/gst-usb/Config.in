@@ -1,0 +1,9 @@
+config BR2_PACKAGE_GST_USB
+	bool "gst-usb"
+	select BR2_PACKAGE_GSTREAMER
+	help
+	 gst-usb-plugin provides an usbsink and usbsrc for gstreamer to allow
+	 embedded systems to create gstreamer pipelines between devices connected
+	 by usb connections.
+
+	 https://github.com/RidgeRun/gst-plugin-usb

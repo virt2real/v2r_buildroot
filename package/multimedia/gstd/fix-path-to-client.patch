@@ -1,0 +1,12 @@
+diff -urN RidgeRun-gstd-e8539a0/src/Makefile.am RidgeRun-gstd-e8539a0.f/src/Makefile.am
+--- RidgeRun-gstd-e8539a0/src/Makefile.am	2014-01-15 18:54:21.000000000 +0400
++++ RidgeRun-gstd-e8539a0.f/src/Makefile.am	2014-02-26 22:58:58.704650662 +0400
+@@ -17,7 +17,7 @@
+ gst_client_LDADD = @GSTREAMER_LIBS@ @GSTREAMER_INTERFACES_LIBS@ @GIO_LIBS@ @READLINE_LIBS@
+ 
+ install-data-hook:
+-	cd $(bindir) ; rm -f gst-client-interpreter ; $(LN_S) gst-client gst-client-interpreter
++	cd $(DESTDIR)$(bindir) ; rm -f gst-client-interpreter ; $(LN_S) gst-client gst-client-interpreter
+ 
+ interfaces_xml := com.ridgerun.gstreamer.gstd.FactoryInterface.xml \
+  com.ridgerun.gstreamer.gstd.PipelineInterface.xml
