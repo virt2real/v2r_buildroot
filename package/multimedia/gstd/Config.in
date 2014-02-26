@@ -1,0 +1,4 @@
+config BR2_PACKAGE_GSTD
+	bool "gstd"
+	help
+	  https://github.com/RidgeRun/gstd
