@@ -38,6 +38,9 @@ umask 077
 
 start() {
  	echo -n "Starting sshd: "
+	mkdir -p /var/empty
+	chown root:sys /var/empty
+	chmod 750 /var/empty
 	/usr/sbin/sshd
 	touch /var/lock/sshd
 	echo "OK"
