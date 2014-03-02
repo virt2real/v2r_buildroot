@@ -1,0 +1,4 @@
+config BR2_PACKAGE_V4L2GRAB
+	bool "v4l2grab"
+	help
+	    video grabber
