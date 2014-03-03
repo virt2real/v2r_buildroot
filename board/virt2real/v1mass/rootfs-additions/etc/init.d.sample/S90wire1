@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+case "$1" in
+start)
+    echo "1-wire initialization"
+
+	# start 1-wire modules
+	modprobe wire.ko
+	modprobe w1-gpio.ko
+	modprobe w1_therm.ko
+    ;;
+
+stop)
+	rmmod wire.ko
+	rmmod w1-gpio.ko
+	rmmod w1_therm.ko
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+

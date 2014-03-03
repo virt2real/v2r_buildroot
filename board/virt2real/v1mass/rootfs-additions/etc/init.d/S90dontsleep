@@ -1,0 +1,20 @@
+#!/bin/sh
+
+case "$1" in
+start)
+    echo "running dontsleep script"
+
+	# turn on wi-fi don't sleep script
+	/etc/virt2real/dontsleep.sh &
+    ;;
+
+stop)
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

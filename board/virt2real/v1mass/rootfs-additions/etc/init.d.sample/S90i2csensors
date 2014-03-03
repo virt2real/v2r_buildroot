@@ -1,0 +1,38 @@
+#!/bin/sh -e
+
+case "$1" in
+start)
+    echo "I2C sensors initialization"
+
+	# init i2c sensors
+	modprobe bma180.ko
+	modprobe bmp085.ko
+	modprobe hmc5843.ko
+	modprobe itg3200.ko
+	modprobe adxl34x.ko
+	modprobe adxl34x-i2c.ko
+
+	echo bmp085 0x77 > /sys/class/i2c-adapter/i2c-1/new_device
+	echo bma180 0x40 > /sys/class/i2c-adapter/i2c-1/new_device
+	echo hmc5843 0x1e > /sys/class/i2c-adapter/i2c-1/new_device
+	echo itg3200 0x68 > /sys/class/i2c-adapter/i2c-1/new_device
+	echo adxl34x 0x53 > /sys/class/i2c-adapter/i2c-1/new_device
+    ;;
+
+stop)
+	rmmod bma180.ko
+	rmmod bmp085.ko
+	rmmod hmc5843.ko
+	rmmod itg3200.ko
+	rmmod adxl34x.ko
+	rmmod adxl34x-i2c.ko
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+

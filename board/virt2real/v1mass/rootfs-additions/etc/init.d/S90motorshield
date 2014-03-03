@@ -1,0 +1,31 @@
+#!/bin/sh
+
+case "$1" in
+start)
+    echo "Motorshield initialization"
+
+    # set i2c address
+    echo "set gpio 83 output 1" > /dev/v2r_gpio
+    echo "set gpio 84 output 1" > /dev/v2r_gpio
+
+    # init new i2c device for PWM chip
+    echo v2r_extpwm 0x70 > /sys/class/i2c-adapter/i2c-1/new_device
+
+    # set up frequency divider
+    echo 50 > /sys/class/i2c-adapter/i2c-1/1-0070/freq
+
+    # set init
+    echo 1 > /sys/class/i2c-adapter/i2c-1/1-0070/init
+    ;;
+
+stop)
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
