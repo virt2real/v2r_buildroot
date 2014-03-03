@@ -4,7 +4,8 @@
 #
 ################################################################################
 
-MONO_VERSION        = 3.2.5
+#MONO_VERSION        = 3.2.5
+MONO_VERSION        = 3.2.8
 MONO_SOURCE	     = mono-$(MONO_VERSION).tar.bz2
 MONO_SITE            = http://download.mono-project.com/sources/mono/
 MONO_LICENSE         = GPLv2 LGPLv2.1+
