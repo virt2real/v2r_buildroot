@@ -40,7 +40,7 @@ define PROFTPD_INSTALL_TARGET_CMDS
 	fi
 	mkdir -p $(TARGET_DIR)/etc/init.d.sample
 	$(INSTALL) -m 0755 package/proftpd/S50proftpd $(TARGET_DIR)/etc/init.d.sample/
-	$(INSTALL) -m 0755 package/proftpd/proftpd.conf $(TARGET_DIR)/etc
+	$(INSTALL) -m 0644 package/proftpd/proftpd.conf $(TARGET_DIR)/etc
 endef
 
 define PROFTPD_UNINSTALL_TARGET_CMDS
