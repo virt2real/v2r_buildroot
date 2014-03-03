@@ -11,6 +11,9 @@ set -e
 
 mkdir -p /var/log/nginx/ > /dev/null 2>&1
 
+# set write permission for www root (for ftp full access)
+chmod 777 /var/www > /dev/null 2>&1
+
 case "$1" in
 start)
 echo -n "Starting $DESC: "
