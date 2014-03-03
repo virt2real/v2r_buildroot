@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 
 case "$1" in
 start)
@@ -12,7 +12,7 @@ stop)
     ;;
 
 *)
-    echo "Usage: /etc/init.d/gstd {start|stop}"
+    echo "Usage: $0 {start|stop}"
     exit 1
     ;;
 esac
