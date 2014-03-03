@@ -1,0 +1,7 @@
+config BR2_PACKAGE_TELEGUEJS
+	bool virt2real_teleguejs
+	select BR2_PACKAGE_NODEJS
+	select BR2_PACKAGE_NODEJS_MODULES
+	select BR2_PACKAGE_GSTD
+	help
+	    NodeJS server for Virt2real Telegue
