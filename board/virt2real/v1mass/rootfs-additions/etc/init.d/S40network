@@ -6,8 +6,8 @@
 case "$1" in
   start)
  	echo "Starting network..."
-	/sbin/ifup lo -f > /dev/null
-	/sbin/ifup eth0 -f > /dev/null
+	/sbin/ifup -f lo
+	/sbin/ifup -f eth0 &
 	;;
   stop)
 	echo -n "Stopping network..."
@@ -23,4 +23,5 @@ case "$1" in
 esac
 
 exit $?
+
 

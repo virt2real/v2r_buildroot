@@ -2,7 +2,7 @@
 
 case "$1" in
 start)
-    echo "running dontsleep script"
+    echo "Starting dontsleep script..."
 
 	# turn on wi-fi don't sleep script
 	/etc/virt2real/dontsleep.sh &

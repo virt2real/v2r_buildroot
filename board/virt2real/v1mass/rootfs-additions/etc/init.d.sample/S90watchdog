@@ -1,0 +1,28 @@
+#!/bin/sh
+
+case "$1" in
+start)
+
+    # Check uEnv parameter " wifi=on" (with leading space) - legacy wi-fi
+    CMDLINE=`cat /proc/cmdline | grep " wifi=on"`
+    if [ "$CMDLINE" == "" ] ; then
+	exit 1
+    fi
+
+    echo "Starting watchdog..."
+
+    # turn on watchdog script
+    /etc/virt2real/watchdog.sh &
+    ;;
+
+stop)
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
