@@ -1,0 +1,7 @@
+config BR2_PACKAGE_DEJAVU_FONTS
+	bool "dejavu fonts"
+	help
+	The DejaVu fonts are a font family
+	    based on the Vera Fonts
+ 
+		http://dejavu-fonts.org/wiki/Main_Page
