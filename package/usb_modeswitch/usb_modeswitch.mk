@@ -17,14 +17,15 @@ endef
 
 define USB_MODESWITCH_INSTALL_TARGET_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) install
+	mkdir -p $(TARGET_DIR)/etc/init.d.sample
+	$(INSTALL) -m 0755 package/usb_modeswitch/S60usbmodeswitch $(TARGET_DIR)/etc/init.d.sample/
 endef
 
 
 define USB_MODESWITCH_CLEAN_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) clean
 
-	mkdir -p $(TARGET_DIR)/etc/init.d.sample
-	$(INSTALL) -m 0755 package/usb_modeswitch/S60usbmodeswitch $(TARGET_DIR)/etc/init.d.sample/
+	$(RM) -f $(TARGET_DIR)/etc/init.d.sample/S60usbmodeswitch
 endef
 
 define USB_MODESWITCH_UNINSTALL_CMDS
