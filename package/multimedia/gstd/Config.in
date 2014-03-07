@@ -1,6 +1,8 @@
 config BR2_PACKAGE_GSTD
 	bool "gstd"
 	select BR2_PACKAGE_DBUS
+	select BR2_PACKAGE_GSTREAMER
+	select BR2_PACKAGE_GST_PLUGINS_BASE
 	help
 	  GStreamer Daemon, also called gstd, is a GStreamer framework fore controlling
 	  audio and video streaming using D-Bus messages. Qt applications, web interfaces,
