@@ -6,11 +6,13 @@
 NAME=gpsd
 DAEMON=/usr/sbin/$NAME
 DEVICES=/dev/ttyS1
+PORTSPEED=4800
 PIDFILE=/var/run/$NAME.pid
 
 start() {
         echo -n "Starting $NAME: "
-        start-stop-daemon -S -q -p $PIDFILE --exec $DAEMON -- -P $PIDFILE $DEVICES && echo "OK" || echo "Failed"
+	stty -F $DEVICES $PORTSPEED
+        start-stop-daemon -S -q -p $PIDFILE --exec $DAEMON -- -P $PIDFILE -n $DEVICES && echo "OK" || echo "Failed"
 }
 stop() {
         echo -n "Stopping $NAME: "
