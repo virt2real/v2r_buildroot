@@ -4,20 +4,24 @@
 auto lo
 iface lo inet loopback
 
-auto eth0
 iface eth0 inet dhcp
   netmask 255.255.255.0
-  up /etc/virt2real/lan-up.sh
-  down /etc/virt2real/lan-down.sh
+  up /etc/virt2real/lan-up.sh 
+  down /etc/virt2real/lan-down.sh 
 
 
-auto wlan0
+iface eth1 inet dhcp
+
+
 iface wlan0 inet static
   address 192.168.1.128
   netmask 255.255.255.0
   gateway 192.168.1.1
   pre-up /etc/virt2real/wlan-pre-up.sh wlan0 
   down /etc/virt2real/wlan-down.sh 
+
+
+iface wlan1 inet dhcp
 
 
 auto uap0
@@ -27,15 +31,13 @@ iface uap0 inet static
   gateway 192.168.2.1
 
 
-auto usb0
 iface usb0 inet static
   address 192.168.3.1
   netmask 255.255.255.0
 
 
-auto ppp0
-iface ppp0 inet dhcp
-
-
 auto usb1
 iface usb1 inet dhcp
+
+
+iface ppp0 inet dhcp
