@@ -3,7 +3,7 @@
 case "$1" in
 start)
     echo "Starting GStreamer Daemon"
-    /usr/bin/gstd --system &
+    nice -n -20 /usr/bin/gstd --system &
     ;;
 
 stop)
