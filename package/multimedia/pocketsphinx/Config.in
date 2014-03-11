@@ -1,0 +1,5 @@
+config BR2_PACKAGE_POCKETSPHINX
+	bool "pocketsphinx"
+	default y
+	help
+	  pocketsphinx is apps.
