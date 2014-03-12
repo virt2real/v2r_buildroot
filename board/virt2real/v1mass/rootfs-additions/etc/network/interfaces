@@ -24,7 +24,6 @@ iface wlan0 inet static
 iface wlan1 inet dhcp
 
 
-auto uap0
 iface uap0 inet static
   address 192.168.2.1
   netmask 255.255.255.0
@@ -36,7 +35,6 @@ iface usb0 inet static
   netmask 255.255.255.0
 
 
-auto usb1
 iface usb1 inet dhcp
 
 
