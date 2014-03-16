@@ -1,5 +1,5 @@
 SPEECH_VERSION = HEAD
-SPEECH_SITE = http://github.com/virt2real/othersoft/tarball/$(NODEJS_MODULES_VERSION)
+SPEECH_SITE = http://github.com/virt2real/othersoft/tarball/$(SPEECH_VERSION)
 
 define SPEECH_INSTALL_TARGET_CMDS
 
