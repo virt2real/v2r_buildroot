@@ -2,4 +2,5 @@ menu "Virt2real additional packages"
 source "package/virt2real/speech/Config.in"
 source "package/virt2real/nodejs_modules/Config.in"
 source "package/virt2real/teleguejs/Config.in"
+source "package/virt2real/gpio-event/Config.in"
 endmenu
