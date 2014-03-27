@@ -15,3 +15,9 @@ export NODE_PATH=/usr/lib/node_modules
 # camera flip
 #i2cset -f -y 1 0x30 0x12 0x39
 
+# TCP/IP tune
+sysctl -w net.ipv4.tcp_congestion_control=lp > /dev/null
+sysctl -w net.ipv4.tcp_fastopen=1 > /dev/null
+sysctl -w net.ipv4.tcp_slow_start_after_idle=0 > /dev/null
+ifconfig wlan0 txqueuelen 5000 > /dev/null
+
