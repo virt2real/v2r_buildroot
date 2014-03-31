@@ -1,0 +1,20 @@
+/dev/ttyUSB0
+921600
+defaultroute
+usepeerdns
+crtscts
+lock
+noauth
+local
+persist
+modem
+nopcomp
+novjccomp
+nobsdcomp
+nodeflate
+noaccomp
+ipcp-accept-local
+ipcp-accept-remote
+noipdefault
+mru 1400
+mtu 1400
