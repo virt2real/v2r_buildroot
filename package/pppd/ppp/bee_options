@@ -1,0 +1,22 @@
+/dev/ttyUSB1
+defaultroute
+usepeerdns
+crtscts
+lock
+local
+persist
+modem
+noauth
+#nopcomp
+#novjccomp
+#nobsdcomp
+#nodeflate
+#noaccomp
+ipcp-accept-local
+ipcp-accept-remote
+noipdefault
+user "beeline"
+password "beeline"
+ipparam beeline
+mru 1400
+mtu 1400

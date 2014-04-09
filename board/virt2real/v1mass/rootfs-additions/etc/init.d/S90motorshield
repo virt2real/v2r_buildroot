@@ -12,7 +12,8 @@ start)
     echo v2r_extpwm 0x70 > /sys/class/i2c-adapter/i2c-1/new_device
 
     # set up frequency divider
-    echo 50 > /sys/class/i2c-adapter/i2c-1/1-0070/freq
+	# set 50Hz (divider = 121)
+    echo 121 > /sys/class/i2c-adapter/i2c-1/1-0070/freq
 
     # set init
     echo 1 > /sys/class/i2c-adapter/i2c-1/1-0070/init

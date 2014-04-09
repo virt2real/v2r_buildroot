@@ -1,0 +1,4 @@
+config BR2_PACKAGE_GPIO_EVENT
+	bool "gpio-event"
+	help
+	  gpio-event driver controls

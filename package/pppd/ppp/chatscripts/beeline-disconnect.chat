@@ -1,0 +1,9 @@
+ABORT           BUSY
+ABORT           ERROR
+ABORT           'NO DIALTONE'
+TIMEOUT         30
+''              '+++\c'
+SAY             " + sending break"
+''              'ATH'
+SAY             "\n + dropping data connection"
+SAY "\n DISCONNECT SCRIPT"

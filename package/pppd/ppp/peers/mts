@@ -1,0 +1,10 @@
+file /etc/ppp/mts_options
+
+#
+# Chat scripts
+#
+user "mts"
+password "mts"
+connect "/usr/sbin/chat -v -t15 -f /etc/ppp/chatscripts/mts.chat"
+disconnect "/usr/sbin/chat -f /etc/ppp/chatscripts/mts-disconnect.chat"
+

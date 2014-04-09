@@ -11,11 +11,9 @@ case "$1" in
 	modprobe udc_core.ko
 	modprobe g_ether.ko
 	#modprobe g_serial.ko
-	ifup usb0
 	;;
   stop)
 	echo -n "Stopping USB devices..."
-	ifdown usb0
 	#rmmod g_serial.ko
 	rmmod g_ether.ko
 	rmmod udc_core.ko
