@@ -47,6 +47,7 @@ define UDEV_INSTALL_INITSCRIPT
 	$(INSTALL) -m 0755 package/udev/S10udev $(TARGET_DIR)/etc/init.d/S10udev
 	mkdir -p $(TARGET_DIR)/etc/udev/rules.d
         $(INSTALL) -m 0755 package/udev/rules.d/* $(TARGET_DIR)/etc/udev/rules.d
+        $(INSTALL) -m 0644 package/udev/udev.conf $(TARGET_DIR)/etc/udev/
 
 endef
 

@@ -1,0 +1,2 @@
+ACTION=="add", SUBSYSTEM=="net*", SUBSYSTEMS=="usb", KERNEL=="eth*", ATTRS{idVendor}=="216f", ATTRS{idProduct}=="0043", NAME="yota%n" RUN+="/etc/virt2real/yota-up.sh yota%n"
+ACTION=="remove", SUBSYSTEM=="net*", SUBSYSTEMS=="usb", KERNEL=="eth*", ATTRS{idVendor}=="216f", ATTRS{idProduct}=="0043", NAME="yota%n" RUN+="/etc/virt2real/yota-down.sh yota%n"
