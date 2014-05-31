@@ -12,6 +12,7 @@ GST_RTSP_SERVER_DEPENDENCIES = gstreamer gst-plugins-base
 
 define GST_RTSP_SERVER_INSTALL_TARGET_CMDS
         mkdir -p $(TARGET_DIR)/usr/bin
+        mkdir -p $(TARGET_DIR)/usr/lib
         $(INSTALL) -m 0755 $(@D)/examples/test-launch $(TARGET_DIR)/usr/bin
         $(INSTALL) -m 0755 $(@D)/examples/test-auth $(TARGET_DIR)/usr/bin
         $(INSTALL) -m 0755 $(@D)/examples/test-mp4 $(TARGET_DIR)/usr/bin
@@ -19,6 +20,7 @@ define GST_RTSP_SERVER_INSTALL_TARGET_CMDS
         $(INSTALL) -m 0755 $(@D)/examples/test-sdp $(TARGET_DIR)/usr/bin
         $(INSTALL) -m 0755 $(@D)/examples/test-uri $(TARGET_DIR)/usr/bin
         $(INSTALL) -m 0755 $(@D)/examples/test-video $(TARGET_DIR)/usr/bin
+        $(INSTALL) -m 0755 $(@D)/gst/rtsp-server/.libs/*.so* $(TARGET_DIR)/usr/lib
 endef
 
 define GST_RTSP_SERVER_UNINSTALL_TARGET_CMDS
