@@ -1,0 +1,26 @@
+#!/bin/sh
+
+case "$1" in
+start)
+    echo "Starting RCboard ..."
+
+    killall run.sh  > /dev/null
+    killall rcboard  > /dev/null
+
+    cd /opt/rcboard
+    ./run.sh > /dev/null &
+    ;;
+
+stop)
+    echo "Stopping RCboard ..."
+    killall run.sh  > /dev/null
+    killall rcboard  > /dev/null
+    killall gstd
+    echo "" > /tmp/onair
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
