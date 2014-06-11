@@ -1,0 +1,2 @@
+# for Ralink devices rename
+ACTION=="add", KERNEL=="ra*", NAME="wlan%n"
