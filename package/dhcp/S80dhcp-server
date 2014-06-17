@@ -10,10 +10,6 @@ INTERFACES="uap0 wlan0 usb0"
 
 test ! -f /usr/sbin/dhcpd && exit 0
 
-if [ ! -f /tmp/accesspoint ] ; then
-  exit
-fi
-
 case "$1" in
 	start)
 		echo -n "Starting DHCP server: "
