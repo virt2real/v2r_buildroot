@@ -1,0 +1,4 @@
+config BR2_PACKAGE_I2C_WRITE
+	bool "I2C write"
+	help
+	  I2C writer for many registers from text file

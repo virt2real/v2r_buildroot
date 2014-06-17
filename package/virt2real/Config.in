@@ -3,4 +3,7 @@ source "package/virt2real/speech/Config.in"
 source "package/virt2real/nodejs_modules/Config.in"
 source "package/virt2real/teleguejs/Config.in"
 source "package/virt2real/gpio-event/Config.in"
+source "package/virt2real/rtsp-server/Config.in"
+source "package/virt2real/rcboard/Config.in"
+source "package/virt2real/i2c_write/Config.in"
 endmenu

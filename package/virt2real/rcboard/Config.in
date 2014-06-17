@@ -1,0 +1,4 @@
+config BR2_PACKAGE_RCBOARD
+	bool "RCboard"
+	help
+	  RC Board client/server
