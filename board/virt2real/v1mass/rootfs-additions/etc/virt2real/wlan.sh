@@ -9,6 +9,10 @@ CMDLINE=`cat /proc/cmdline | grep " wifi=on"`
 if [ ! "$CMDLINE" == "" ] ; then
 
     # virt2real legacy WiFi
+
+echo 1 > /proc/v2r_gpio/59
+echo 1 > /proc/v2r_gpio/60
+
     modprobe libertas
     modprobe libertas_sdio
     
@@ -23,9 +27,8 @@ if [ ! "$CMDLINE" == "" ] ; then
 
     # USB WiFi
 
-    #ASUS USB-N53
-    modprobe rt2800usb.ko
-    #insmod /rt3572sta.ko
+    #ASUS USB-N53 and D-link DWA-160 rev.B2 (and many others)
+    insmod /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/net/wireless/rt5572sta.ko
 
     #ASUS USB-N13
     modprobe rtl8192cu.ko
