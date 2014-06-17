@@ -44,9 +44,8 @@ iface usb1 inet dhcp
 iface ppp0 inet dhcp
 
 
-auto yota0
 iface yota0 inet dhcp
 
-auto yota1
+
 iface yota1 inet dhcp
 

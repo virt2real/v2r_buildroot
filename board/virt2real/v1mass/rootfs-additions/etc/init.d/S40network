@@ -6,7 +6,7 @@
 case "$1" in
   start)
  	echo "Starting network..."
-	/sbin/ifup -a -f &
+	/sbin/ifup -a -f
 	;;
   stop)
 	echo -n "Stopping network..."
