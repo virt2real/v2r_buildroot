@@ -1,0 +1,14 @@
+#!/bin/sh
+
+OV2643=`cat /proc/cmdline | grep " camera=ov2643"`
+OV5642=`cat /proc/cmdline | grep " camera=ov5642"`
+
+if [ ! "$OV2643" == "" ]; then
+	echo "Set OV2643 HD mode"
+	i2c_write -a 0x30 -f /etc/cameramodes/ov2643_720p.reg > /dev/null
+fi
+
+if [ ! "$OV5642" == "" ]; then
+	echo "Set OV5642 HD mode"
+	i2c_write -a 0x3c -f /etc/cameramodes/ov5642_720p.reg > /dev/null
+fi
