@@ -4,7 +4,7 @@
 #
 #############################################################
 
-NGINX_VERSION = 1.4.2
+NGINX_VERSION = 1.6.0
 NGINX_SITE = http://nginx.org/download
 NGINX_SOURCE =nginx-$(NGINX_VERSION).tar.gz
 NGINX_CONF_OPT = \
