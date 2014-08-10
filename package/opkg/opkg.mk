@@ -14,6 +14,11 @@ OPKG_AUTORECONF = YES
 # Uses PKG_CHECK_MODULES() in configure.ac
 OPKG_DEPENDENCIES = host-pkgconf
 
+HOST_OPKG_AUTORECONF = YES
+HOST_OPKG_DEPENDENCIES = host-pkgconf
+HOST_OPKG_CONF_OPT = --disable-curl --disable-gpg
+
+
 # Ensure directory for lockfile exists
 define OPKG_CREATE_LOCKDIR
 	mkdir -p $(TARGET_DIR)/usr/lib/opkg
@@ -26,3 +31,4 @@ endef
 OPKG_POST_INSTALL_TARGET_HOOKS += OPKG_CREATE_LOCKDIR
 
 $(eval $(autotools-package))
+$(eval $(host-autotools-package))

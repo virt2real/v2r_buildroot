@@ -145,7 +145,11 @@ $(BUILD_DIR)/%/.stamp_images_installed:
 	$(Q)touch $@
 
 # Install to target dir
-$(BUILD_DIR)/%/.stamp_target_installed:
+$(BUILD_DIR)/%/.stamp_target_installed: $(BUILD_DIR)/%/.stamp_target_installed_xpkg
+	$(Q)touch $@
+
+# Install to target dir
+$(BUILD_DIR)/%/.stamp_target_installed_dirty:
 	@$(call MESSAGE,"Installing to target")
 	$(if $(BR2_INIT_SYSTEMD),\
 		$($(PKG)_INSTALL_INIT_SYSTEMD))
@@ -158,6 +162,22 @@ ifeq ($(BR2_HAVE_DEVFILES),)
 		$(RM) -f $(addprefix $(TARGET_DIR)/usr/bin/,$($(PKG)_CONFIG_SCRIPTS)) ; \
 	fi
 endif
+	$(Q)touch $@
+
+
+# Install shiny packages into target 
+$(BUILD_DIR)/%/.stamp_target_installed_xpkg: $(BUILD_DIR)/%/.stamp_xpackage_installed
+	@$(call MESSAGE,"Installing to target wth opkg")
+	mkdir -p $(TARGET_DIR)/usr/lib/opkg
+	(echo "arch all 1"; echo "arch arm 1") > .tmp-$(${PKG}_BASE_NAME).$(ARCH)-opkg.conf
+
+	$(HOST_DIR)/usr/bin/opkg-cl \
+		--force-overwrite \
+		-o $(TARGET_DIR) \
+		-f .tmp-$(${PKG}_BASE_NAME).$(ARCH)-opkg.conf \
+		install "$(XPACKAGE_DIR)/$(${PKG}_BASE_NAME).$(ARCH).opk"
+
+	rm .tmp-$(${PKG}_BASE_NAME).$(ARCH)-opkg.conf
 	$(Q)touch $@
 
 # Install to package dir

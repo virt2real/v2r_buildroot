@@ -229,6 +229,10 @@ BASE_TARGETS += uclibc-configured host-binutils cross_compiler uclibc-target-uti
 else
 BASE_TARGETS += uclibc
 endif
+
+# TODO Make configurable
+BASE_TARGETS += host-opkg
+
 TARGETS:=
 
 # silent mode requested?
