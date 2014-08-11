@@ -37,5 +37,6 @@ source "package/multimedia/pocketsphinx/Config.in"
 source "package/multimedia/gstd/Config.in"
 #source "package/multimedia/ipiped/Config.in"
 #source "package/multimedia/gst-usb/Config.in"
+source "package/multimedia/psplash/Config.in"
 source "package/yavta/Config.in"
 endmenu
