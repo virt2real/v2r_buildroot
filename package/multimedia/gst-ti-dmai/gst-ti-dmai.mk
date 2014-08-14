@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-GST_TI_DMAI_VERSION = HEAD
-GST_TI_DMAI_SITE = http://github.com/virt2real/gstreamer-dmai/tarball/$(GST_TI_DMAI_VERSION)
+GST_TI_DMAI_VERSION = master
+GST_TI_DMAI_SITE = http://github.com/virt2real/gst-ti-dmai/tarball/$(GST_TI_DMAI_VERSION)
 GST_TI_DMAI_INSTALL_STAGING = YES
 GST_TI_DMAI_DEPENDENCIES = gstreamer host-pkgconf
 GST_TI_DMAI_AUTORECONF = YES
@@ -21,6 +21,8 @@ GST_TI_DMAI_PLATFORM = dm365
 
 GST_TI_DMAI_CONF_ENV = \
 		PLATFORM="$(GST_TI_DMAI_PLATFORM)" \
+		GST_TI_PLATFORM="$(GST_TI_DMAI_PLATFORM)" \
+		PLATFORM_XDC="$(GST_TI_DMAI_DEVICE)" \
 		XDAIS_INSTALL_DIR="$(DEVDIR)/dvsdk/xdais_6_26_01_03" \
 		CE_INSTALL_DIR="$(DEVDIR)/dvsdk/codec-engine_2_26_02_11" \
 		CODEC_INSTALL_DIR="$(DEVDIR)/dvsdk/codecs-dm365_4_02_00_00" \
