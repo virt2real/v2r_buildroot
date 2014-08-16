@@ -13,16 +13,11 @@ define RFKILL_BUILD_CMDS
 endef
 
 define RFKILL_INSTALL_TARGET_CMDS
-        install -m 0755 -D $(@D)/rfkill $(TARGET_DIR)/usr/bin/rfkill
-endef
-
-define RFKILL_INSTALL_TARGET_CMDS
-#	$(MAKE) -C $(@D)
+	mkdir -p $(TARGET_DIR)/usr/bin
 	cp -a $(@D)/rfkill $(TARGET_DIR)/usr/bin/rfkill
 endef
 
 define RFKILL_CLEAN_CMDS
-#	$(MAKE) -C $(@D) clean
 	rm -f $(TARGET_DIR)/usr/bin/rfkill
 endef
 
