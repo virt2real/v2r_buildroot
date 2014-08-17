@@ -11,6 +11,7 @@ PSPLASH_AUTORECONF = YES
 
 
 define PSPLASH_BUILD_CMDS
+	apt-get install libgtk2.0-dev -y
         cp package/multimedia/psplash/screenlogo.png $(@D)/base-images/screenlogo.png
 	cd $(@D) && $(@D)/make-image-header.sh $(@D)/base-images/screenlogo.png POKY && mv screenlogo-img.h psplash-poky-img.h
 endef
