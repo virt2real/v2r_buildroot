@@ -30,6 +30,9 @@ if [ ! "$CMDLINE" == "" ] ; then
     #ASUS USB-N53 and D-link DWA-160 rev.B2 (and many others)
     insmod /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/net/wireless/rt5572sta.ko
 
+    #TP-link TL-WN725N
+    insmod /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/net/wireless/8188eu.ko
+
     #ASUS USB-N13
     modprobe rtl8192cu.ko
 
