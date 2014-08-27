@@ -573,6 +573,7 @@ source "package/slirp/Config.in"
 source "package/usbredir/Config.in"
 source "package/wvstreams/Config.in"
 source "package/zeromq/Config.in"
+source "package/nanomsg/Config.in"
 source "package/zmqpp/Config.in"
 source "package/zyre/Config.in"
 endmenu
