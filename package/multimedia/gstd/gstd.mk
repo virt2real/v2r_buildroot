@@ -9,7 +9,7 @@ GSTD_SITE = http://github.com/RidgeRun/gstd/tarball/$(GSTD_VERSION)
 GSTD_INSTALL_TARGET = YES
 GSTD_AUTORECONF = YES
 GSTD_DEPENDENCIES = host-pkgconf host-vala dbus gstreamer gst-plugins-base
-GSTD_CONF_OPT = --with-vapidir=$(TARGET_DIR)/usr/share/vala-0.18/vapi/
+GSTD_CONF_OPT = --with-vapidir=$(TARGET_DIR)/usr/share/vala-0.26/vapi/
 
 define GSTD_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/etc/dbus-1/system.d
