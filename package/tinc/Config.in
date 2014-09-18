@@ -1,0 +1,5 @@
+config BR2_PACKAGE_TINC
+	bool "tinc"
+	help
+	 tinc is a Virtual Private Network (VPN) daemon that uses tunnelling and 
+	 encryption to create a secure private network between hosts on the Internet.
