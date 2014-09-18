@@ -1,0 +1,8 @@
+config BR2_PACKAGE_MIREDO
+	bool "miredo"
+	depends on BR2_INET_IPV6
+	help
+	 Miredo is an open-source Teredo IPv6 tunneling software, for Linux and the BSD operating systems.
+
+comment "miredo needs a IPv6 support"
+        depends on !(BR2_INET_IPV6)
