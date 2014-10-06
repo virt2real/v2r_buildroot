@@ -3,9 +3,9 @@
 # OpenCV (Open Source Computer Vision)
 #
 #############################################################
-OPENCV_VERSION = 2.4.2
+OPENCV_VERSION = 2.4.9
 OPENCV_SITE    = http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/$(OPENCV_VERSION)
-OPENCV_SOURCE  = OpenCV-$(OPENCV_VERSION).tar.bz2
+OPENCV_SOURCE  = opencv-$(OPENCV_VERSION).zip
 OPENCV_INSTALL_STAGING = YES
 
 OPENCV_CONF_OPT += \
@@ -103,6 +103,11 @@ OPENCV_CONF_OPT += \
 	-DWITH_XINE=OFF
 
 OPENCV_DEPENDENCIES += zlib
+
+define OPENCV_EXTRACT_CMDS
+	unzip -d $(BUILD_DIR) $(DL_DIR)/$(OPENCV_SOURCE)
+endef
+
 
 ifeq ($(BR2_PACKAGE_OPENCV_WITH_FFMPEG),y)
 OPENCV_CONF_OPT += -DWITH_FFMPEG=ON
