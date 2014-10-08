@@ -1,0 +1,12 @@
+diff -rupN pjproject-2.3.origin/build/cc-auto.mak.in pjproject-2.3/build/cc-auto.mak.in
+--- pjproject-2.3.origin/build/cc-auto.mak.in	2013-10-21 11:52:35.000000000 +0400
++++ pjproject-2.3/build/cc-auto.mak.in	2014-10-08 15:05:46.601792866 +0400
+@@ -2,7 +2,7 @@ export CC = @CC@ -c
+ export CXX = @CXX@ -c
+ export AR = @AR@
+ export AR_FLAGS = @AR_FLAGS@
+-export LD = @LD@
++export LD = @CC@
+ export LDOUT = -o 
+ export RANLIB = @RANLIB@
+ 

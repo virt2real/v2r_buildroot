@@ -1,0 +1,8 @@
+config BR2_PACKAGE_PJSIP
+	bool "pjsip"
+	depends on BR2_PACKAGE_UTIL_LINUX_LIBUUID
+	help
+	 PJSIP is a free and open source multimedia communication library written in C language 
+	 implementing standard based protocols such as SIP, SDP, RTP, STUN, TURN, and ICE.
+
+	 http://www.pjsip.org/
