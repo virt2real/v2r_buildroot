@@ -37,9 +37,14 @@ if [ ! "$CMDLINE" == "" ] ; then
     modprobe rtl8192cu.ko
 
     #Upvel UA-214NU
-    modprobe rt2800usb.ko
+    #modprobe rt2800usb.ko
 
     #ASUS USB-N10
     modprobe r8712u.ko
+
+    # Add devices width different VID:PID
+
+    # add TP-LINK TL-WN8200ND
+    echo 2357 0100 > /sys/bus/usb/drivers/rtl8192cu/new_id
 
 fi
