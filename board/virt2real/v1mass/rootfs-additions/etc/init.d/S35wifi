@@ -58,21 +58,19 @@ case "$1" in
 
 		if [ ! "$WIFI" = "" ] ; then 
 			echo "Starting onboard acces point..."
-			/etc/virt2real/ap.sh /etc/softap.conf &
+			/etc/virt2real/ap.sh /etc/softap.conf
 		fi
 
 		if [ ! "$USBWIFI" = "" ] ; then 
 			echo "Starting USB acces point..."
-			/etc/virt2real/ap_usb.sh &
+			/etc/virt2real/ap_usb.sh
 		fi
 
 		exit 0
+	else
+		echo "Starting Wi-Fi client..."
+		/etc/virt2real/wlan.sh
 	fi
-
-
-	echo "Starting Wi-Fi client..."
-	/etc/virt2real/wlan.sh &
-	
 	;;
   stop)
 	echo -n "Stopping Wi-Fi..."

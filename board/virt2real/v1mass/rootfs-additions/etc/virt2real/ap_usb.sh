@@ -5,8 +5,9 @@ modprobe lib80211.ko
 # start drivers initialization
 /etc/virt2real/wlan.sh
 
-# config interface
-/sbin/ifup wlan0 -f
+# config interface for fixed IP address
+ifconfig wlan0 192.168.2.1
+#/sbin/ifup wlan0 -f
 
 hostapd /etc/hostapd/hostapd.conf -B
 
