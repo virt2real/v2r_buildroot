@@ -4,8 +4,8 @@
 #
 #############################################################
 
-LIVE555_VERSION = 2011.06.16
-LIVE555_SOURCE = live.$(LIVE555_VERSION).tar.gz
+LIVE555_VERSION = latest
+LIVE555_SOURCE = live555-$(LIVE555_VERSION).tar.gz
 LIVE555_SITE = http://www.live555.com/liveMedia/public/
 LIVE555_INSTALL_STAGING = YES
 
