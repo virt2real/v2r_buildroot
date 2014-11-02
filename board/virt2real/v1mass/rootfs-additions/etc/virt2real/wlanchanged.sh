@@ -10,6 +10,7 @@ CONNECTED)
 	echo $SSID > $SSIDFILE
 	/etc/virt2real/log "connected to Wi-Fi $SSID"
 	/etc/virt2real/setlight.sh red on
+	udhcpc -R -b -p /var/run/udhcpc.$IFACE.pid -i $IFACE &
 ;;
 
 DISCONNECTED)
