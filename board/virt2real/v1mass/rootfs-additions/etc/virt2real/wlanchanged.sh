@@ -17,6 +17,7 @@ DISCONNECTED)
 	/etc/virt2real/setlight.sh red off
 	echo "" > $SSIDFILE
 	/etc/virt2real/log "disconnected from Wi-Fi \"$SSID\""
+	killall udhcpc > /dev/null
 ;;
 
 esac
