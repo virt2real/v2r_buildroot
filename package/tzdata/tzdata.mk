@@ -4,7 +4,7 @@
 #
 #############################################################
 
-TZDATA_VERSION = 2012j
+TZDATA_VERSION = 2014j
 TZDATA_SOURCE = tzdata$(TZDATA_VERSION).tar.gz
 TZDATA_SITE = http://www.iana.org/time-zones/repository/releases
 TZDATA_DEPENDENCIES = host-zic
