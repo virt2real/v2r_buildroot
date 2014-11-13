@@ -1,8 +1,2 @@
-#GST_DEBUG=3,*rtmp*:5  \
-gst-launch v4l2src always-copy=false chain-ipipe=true  ! \
-    video/x-raw-yuv,format='(fourcc)'NV12, width=640, height=480, framerate='(fraction)'20/1 ! \
-    dmaiaccel ! \
-    dmaienc_h264 ddrbuf=true encodingpreset=2 ratecontrol=4 targetbitrate=600000 ! \
-    flvmux streamable=false ! \
-    rtmpsink location="rtmp://localhost/live/ playpath=v2r live=1" sync=false
-
+#!/bin/sh
+gst-launch v4l2src always-copy=false chain-ipipe=true ! capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=1280,height=720,framerate='(fraction)'30/1 ! dmaiaccel qos=false ! dmaienc_h264 ddrbuf=false copyOutput=false encodingpreset=2 ratecontrol=2 targetbitrate=1600000 intraframeinterval=30 idrinterval=60 bytestream=false headers=false aud=false ! flvmux name=mux streamable=true ! rtmpsink location="rtmp://localhost/live/stream live=1" sync=false enable-last-buffer=false
