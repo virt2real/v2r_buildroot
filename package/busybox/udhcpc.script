@@ -56,10 +56,10 @@ case "$1" in
 		cat $TMPFILE > $RESOLV_CONF
 		rm -f $TMPFILE
 
-		[ -n "$domain" ] && echo "search $domain # $interface" >> $RESOLV_CONF
+		[ -n "$domain" ] && echo "search $domain # $interface" > $RESOLV_CONF
 		for i in $dns ; do
 			echo adding dns $i
-			echo "nameserver $i # $interface" >> $RESOLV_CONF
+			echo "nameserver $i # $interface" > $RESOLV_CONF
 		done
 		;;
 esac
