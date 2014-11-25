@@ -4,9 +4,8 @@
 #
 #############################################################
 
-RTMPDUMP_VERSION = b627335
-RTMPDUMP_SITE = http://sources.openelec.tv/devel
-RTMPDUMP_SOURCE = rtmpdump-$(RTMPDUMP_VERSION).tar.xz
+RTMPDUMP_VERSION = master
+RTMPDUMP_SITE = http://github.com/virt2real/rtmpdump/tarball/$(RTMPDUMP_VERSION)
 RTMPDUMP_INSTALL_STAGING = YES
 RTMPDUMP_INSTALL_TARGET = YES
 
