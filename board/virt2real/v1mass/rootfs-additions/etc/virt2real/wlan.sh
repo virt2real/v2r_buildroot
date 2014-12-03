@@ -29,14 +29,14 @@ if [ ! "$CMDLINE" == "" ] ; then
 
     #ASUS USB-N53 and D-link DWA-160 rev.B2 (and many others)
     insmod /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/net/wireless/rt5572sta.ko
-	# add ASUS USB-N53 VID:PID
+    # add ASUS USB-N53 VID:PID
     echo 0b05 179d > /sys/bus/usb/drivers/rt2870/new_id
 
     #TP-link TL-WN725N
     insmod /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/net/wireless/8188eu.ko
 
     #ASUS USB-N13
-    modprobe rtl8192cu.ko
+    insmod /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/net/wireless/8192cu.ko
 
     #Upvel UA-214NU
     #modprobe rt2800usb.ko
@@ -48,5 +48,6 @@ if [ ! "$CMDLINE" == "" ] ; then
 
     # add TP-LINK TL-WN8200ND
     echo 2357 0100 > /sys/bus/usb/drivers/rtl8192cu/new_id
-	echo 0bda 8176 > /sys/bus/usb/drivers/rtl8192cu/new_id
+    echo 0bda 8176 > /sys/bus/usb/drivers/rtl8192cu/new_id
+
 fi
