@@ -14,10 +14,12 @@ endef
 define I2C_WRITE_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/usr/bin
 	$(INSTALL) -m 0755 -D $(@D)/i2c_write/i2c_write $(TARGET_DIR)/usr/bin/i2c_write
+	$(INSTALL) -m 0755 -D $(@D)/i2c_write/i2c_check $(TARGET_DIR)/usr/bin/i2c_check
 endef
 
 define I2C_WRITE_CLEAN_CMDS
 	rm -f $(TARGET_DIR)/usr/bin/i2c_write
+	rm -f $(TARGET_DIR)/usr/bin/i2c_check
 endef
 
 $(eval $(generic-package))
