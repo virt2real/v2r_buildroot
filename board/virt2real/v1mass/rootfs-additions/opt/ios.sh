@@ -1,4 +1,18 @@
 #!/bin/sh
-gst-launch v4l2src always-copy=false chain-ipipe=true ! capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=1280,height=720,framerate='(fraction)'30 ! dmaiaccel ! dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=1 intraframeinterval=30 idrinterval=60 t8x8intra=true t8x8inter=true airrate=30 targetbitrate=1000000 bytestream=false headers=true ! rtph264pay mtu=1500 pt=96 ! multiudpsink clients="192.168.1.10:3000,192.168.1.20:3000" sync=false enable-last-buffer=false
 
+CLIENTS="192.168.1.103:3000"
 
+WIDTH=`cat /etc/virt2real/video.width`
+HEIGHT=`cat /etc/virt2real/video.height`
+FPS=`cat /etc/virt2real/video.fps`
+BITRATE=`cat /etc/virt2real/video.bitrate`
+PITCHSTR=`cat /etc/virt2real/video.pitch`
+if [ ! "$PITCHSTR" = "" ] ; then
+	PITCH=",pitch=$PITCHSTR"
+fi
+
+gst-launch v4l2src always-copy=false chain-ipipe=true ! \
+	capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=$WIDTH,height=$HEIGHT,framerate='(fraction)'$FPS$PITCH ! \
+	dmaiaccel ! dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=2 intraframeinterval=30 idrinterval=60 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=false headers=true ! \
+	rtph264pay mtu=1444 ! \
+	multiudpsink clients=$CLIENTS sync=false enable-last-buffer=false

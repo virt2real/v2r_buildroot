@@ -1,2 +1,19 @@
 #!/bin/sh
-gst-launch v4l2src always-copy=false chain-ipipe=true ! capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=1280,height=720,framerate='(fraction)'30/1 ! dmaiaccel qos=false ! dmaienc_h264 ddrbuf=false copyOutput=false encodingpreset=2 ratecontrol=2 targetbitrate=1600000 intraframeinterval=30 idrinterval=60 bytestream=false headers=false aud=false ! flvmux name=mux streamable=true ! rtmpsink location="rtmp://localhost/live/stream live=1" sync=false enable-last-buffer=false
+
+LOCATION="rtmp://localhost/live"
+
+WIDTH=`cat /etc/virt2real/video.width`
+HEIGHT=`cat /etc/virt2real/video.height`
+FPS=`cat /etc/virt2real/video.fps`
+BITRATE=`cat /etc/virt2real/video.bitrate`
+PITCHSTR=`cat /etc/virt2real/video.pitch`
+if [ ! "$PITCHSTR" = "" ] ; then
+	PITCH=",pitch=$PITCHSTR"
+fi
+
+gst-launch v4l2src always-copy=false chain-ipipe=true ! \
+	capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=$WIDTH,height=$HEIGHT,framerate='(fraction)'$FPS$PITCH ! \
+	dmaiaccel ! \
+	dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=2 intraframeinterval=30 idrinterval=120 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=false headers=false ! \
+	flvmux name=mux streamable=true ! \
+	rtmpsink location=$LOCATION sync=false enable-last-buffer=false

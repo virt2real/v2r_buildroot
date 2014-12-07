@@ -1,10 +1,18 @@
 #!/bin/sh
-HOST=192.168.1.10
+
+CLIENTS="192.168.1.10:3000"
+
+WIDTH=`cat /etc/virt2real/video.width`
+HEIGHT=`cat /etc/virt2real/video.height`
+FPS=`cat /etc/virt2real/video.fps`
+BITRATE=`cat /etc/virt2real/video.bitrate`
+PITCHSTR=`cat /etc/virt2real/video.pitch`
+if [ ! "$PITCHSTR" = "" ] ; then
+	PITCH=",pitch=$PITCHSTR"
+fi
 
 gst-launch v4l2src always-copy=false chain-ipipe=true ! \
-    video/x-raw-yuv,format='(fourcc)'NV12, width=640, height=480, framerate='(fraction)'30/1 ! \
-    dmaiaccel ! \
-    dmaienc_h264 ddrbuf=true encodingpreset=2 ratecontrol=4 targetbitrate=600000 ! \
-    rtph264pay !  queue ! \
-    udpsink port=3000 host=$HOST sync=false
-
+	capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=$WIDTH,height=$HEIGHT,framerate='(fraction)'$FPS$PITCH ! \
+	dmaiaccel ! dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=2 intraframeinterval=30 idrinterval=120 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=true headers=false ! \
+	rtph264pay mtu=30000 ! \
+	multiudpsink clients=$CLIENTS sync=false enable-last-buffer=false
