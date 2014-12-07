@@ -42,7 +42,7 @@ if [ ! "$CMDLINE" == "" ] ; then
     #modprobe rt2800usb.ko
 
     #ASUS USB-N10
-    modprobe r8712u.ko
+    #modprobe r8712u.ko
 
     # Add devices width different VID:PID
 
