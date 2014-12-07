@@ -17,7 +17,7 @@ start)
 	gst-launch v4l2src always-copy=false chain-ipipe=true decimate=1 ! \
 	    capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=$WIDTH,height=$HEIGHT,framerate='(fraction)'$FPS$PITCH ! \
 	    dmaiaccel ! \
-	    dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=1 intraframeinterval=30 idrinterval=120 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=false headers=false ! \
+	    dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=2 intraframeinterval=30 idrinterval=120 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=false headers=false ! \
 	    queue ! \
 	    ffmux_mpegts name=mux ! \
 	    multiudpsink clients="$CLIENTS" sync=false enable-last-buffer=false > /dev/null &

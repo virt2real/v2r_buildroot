@@ -18,7 +18,7 @@ run()
 			/usr/bin/killall -INT gst-launch-0.10 > /dev/null 2>&1
 			gst-launch v4l2src always-copy=false chain-ipipe=true ! \
 				capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=$WIDTH,height=$HEIGHT,framerate='(fraction)'$FPS$PITCH ! \
-				dmaiaccel ! dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=1 intraframeinterval=30 idrinterval=120 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=true headers=false ! \
+				dmaiaccel ! dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=2 intraframeinterval=30 idrinterval=120 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=true headers=false ! \
 				rtph264pay mtu=30000 ! \
 				multiudpsink clients="$CLIENTS" sync=false enable-last-buffer=false > /dev/null &
 			echo "RTP Gst" > /tmp/onair
@@ -27,7 +27,7 @@ run()
 			/usr/bin/killall -INT gst-launch-0.10 > /dev/null 2>&1
 			gst-launch v4l2src always-copy=false chain-ipipe=true ! \
 				capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=$WIDTH,height=$HEIGHT,framerate='(fraction)'$FPS$PITCH ! \
-				dmaiaccel ! dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=1 intraframeinterval=30 idrinterval=120 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=true headers=false ! \
+				dmaiaccel ! dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=2 intraframeinterval=30 idrinterval=120 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=true headers=false ! \
 				multiudpsink clients="$CLIENTS" sync=false enable-last-buffer=false > /dev/null &
 			echo "RTP Android" > /tmp/onair
 		;;
@@ -35,7 +35,7 @@ run()
 			/usr/bin/killall -INT gst-launch-0.10 > /dev/null 2>&1
 			gst-launch v4l2src always-copy=false chain-ipipe=true ! \
 				capsfilter caps=video/x-raw-yuv,format='(fourcc)'NV12,width=$WIDTH,height=$HEIGHT,framerate='(fraction)'$FPS$PITCH ! \
-				dmaiaccel ! dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=1 intraframeinterval=30 idrinterval=60 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=false headers=true ! \
+				dmaiaccel ! dmaienc_h264 copyOutput=false ddrbuf=false encodingpreset=2 ratecontrol=2 intraframeinterval=30 idrinterval=60 t8x8intra=true t8x8inter=true targetbitrate=$BITRATE bytestream=false headers=true ! \
 				rtph264pay mtu=1444 ! \
 				multiudpsink clients="$CLIENTS" sync=false enable-last-buffer=false >/dev/null &
 			echo "RTP IOS" > /tmp/onair
