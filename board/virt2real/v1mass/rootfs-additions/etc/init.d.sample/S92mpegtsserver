@@ -1,0 +1,20 @@
+#!/bin/sh
+
+case "$1" in
+start)
+    echo "Starting MPEG-TS server..."
+    /etc/virt2real/mpegts_server.sh start > /dev/null &
+    ;;
+
+stop)
+    echo "Stopping MPEG-TS server..."
+    /etc/virt2real/mpegts_server.sh stop > /dev/null &
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

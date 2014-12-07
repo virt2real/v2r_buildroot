@@ -1,0 +1,20 @@
+#!/bin/sh
+
+case "$1" in
+start)
+    echo "Starting RTP server..."
+    /etc/virt2real/rtp_server.sh start > /dev/null &
+    ;;
+
+stop)
+    echo "Stopping RTP server..."
+    /etc/virt2real/rtp_server.sh stop > /dev/null &
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
