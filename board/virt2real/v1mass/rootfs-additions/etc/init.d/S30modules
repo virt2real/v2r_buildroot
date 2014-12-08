@@ -1,9 +1,9 @@
-#!/bin/sh -e
+#!/bin/sh
 
 case "$1" in
 start)
 	echo "Loading coprocessors modules..."
-	if [ -f /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/dsp/cmemk.ko ] ; then
+	if [ -f /lib/modules/`uname -r`/kernel/drivers/dsp/cmemk.ko ] ; then
 	    PHYS_START=
 	    if [ -z "$PHYS_START" ] ; then
 	        RESERVED_START=$(( `sed -e "s/.*mem=\([0-9]*\)M .*/\1 * 1024 * 1024/" /proc/cmdline` ))
@@ -19,54 +19,45 @@ start)
 		echo "WARNING: the cmem allocation ends beyond the end of RAM registered for this hardware"
 		echo "End of cmem: $PHYS_END, End of ram: 0x88000000 \n"
 	    fi
-	    rmmod cmemk 2>/dev/null || true
-	    rm -f /dev/cmem
+	    #rmmod cmemk 2>/dev/null || true
+	    #rm -f /dev/cmem
 	    echo "  Loading cmem from $PHYS_START to $PHYS_END"
 	    modprobe cmemk phys_start=$PHYS_START phys_end=$PHYS_END allowOverlap=1 useHeapIfPoolUnavailable=1 allowOverlap=1 phys_start_1=0x00001000 phys_end_1=0x00008000 pools_1=1x28672
 	fi
-	if [ -f /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/dsp/dsplinkk.ko ] ; then
-	    rmmod dsplinkk 2>/dev/null || true
-	    modprobe dsplinkk
-	fi
-	if [ -f /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/dsp/sdmak.ko ] ; then
-	    rmmod sdmak 2>/dev/null || true
-	    modprobe sdmak
-	fi
-	if [ -f /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/dsp/lpm_omap3530.ko ] ; then
-	    rmmod lpm_omap3530 2>/dev/null || true
-	    modprobe lpm_omap3530
-	fi
-	if [ -f /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/dsp/dm365mmap.ko ] ; then
-	    rmmod dm365mmap 2>/dev/null || true
+	if [ -f /lib/modules/`uname -r`/kernel/drivers/dsp/dm365mmap.ko ] ; then
+	    #rmmod dm365mmap 2>/dev/null || true
 	    modprobe dm365mmap
 	    # For some reason this driver doesn't triger udev/mdev to build the device
 	    rm -f /dev/dm365mmap
 	    mknod /dev/dm365mmap c `awk '$2  ~ /dm365mmap/ {print $1}' /proc/devices` 0
 	fi
-	if [ -f /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/dsp/edmak.ko ] ; then
-	    rmmod edmak 2>/dev/null || true
+	if [ -f /lib/modules/`uname -r`/kernel/drivers/dsp/edmak.ko ] ; then
+	    #rmmod edmak 2>/dev/null || true
 	    modprobe edmak
 	fi
-	if [ -f /lib/modules/3.9.0-rc6-virt2real+/kernel/drivers/dsp/irqk.ko ] ; then
-	    rmmod irqk 2>/dev/null || true
-	    modprobe irqk
+
+	# detect HDMI input
+	/usr/bin/i2c_check -a 0x22 > /dev/null
+	if [ "$?" = "0" ] ; then
+		/usr/bin/i2c_check -a 0x4c > /dev/null
+		if [ "$?" = "0" ] ; then
+			echo "Loading irqk for HDMI input"
+			modprobe irqk_hdmi
+		else
+			echo "Loading irqk"
+			modprobe irqk
+		fi
+	else
+		echo "Loading irqk"
+		modprobe irqk
 	fi
-	
+
 	;;
 
 stop)
 	echo "Unloading coprocessors modules"
 	if lsmod | grep -q cmemk ; then
 	    rmmod cmemk || true
-	fi
-	if lsmod | grep -q sdmak ; then
-	    rmmod sdmak || true
-	fi
-	if lsmod | grep -q lpm_omap3530 ; then
-	    rmmod lpm_omap3530 || true
-	fi
-	if lsmod | grep -q dsplinkk ; then
-	    rmmod dsplinkk || true
 	fi
 	if lsmod | grep -q dm365mmap ; then
 	    rmmod dm365mmap || true
@@ -77,6 +68,9 @@ stop)
 	if lsmod | grep -q irqk ; then
 	    rmmod irqk || true
 	fi
+	if lsmod | grep -q irqk_hdmi ; then
+	    rmmod irqk_hdmi || true
+	fi
 	;;
 
 *)
@@ -84,4 +78,3 @@ stop)
 	exit 1
 	;;
 esac
-
