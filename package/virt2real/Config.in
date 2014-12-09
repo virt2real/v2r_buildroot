@@ -6,4 +6,5 @@ source "package/virt2real/gpio-event/Config.in"
 source "package/virt2real/rtsp-server/Config.in"
 source "package/virt2real/rcboard/Config.in"
 source "package/virt2real/i2c_write/Config.in"
+source "package/virt2real/uflash/Config.in"
 endmenu
