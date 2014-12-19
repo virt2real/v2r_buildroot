@@ -57,8 +57,10 @@ case "$1" in
 		rm -f $TMPFILE
 
 		# prepare miniupnpd and start em
-		if [ -x /etc/virt2real/upnpd_prepare.sh ]; then
-			/etc/virt2real/upnpd_prepare.sh $interface
+		if [ ! "$ip" = "" ] ; then
+			if [ -x /etc/virt2real/upnpd_prepare.sh ]; then
+				/etc/virt2real/upnpd_prepare.sh $interface
+			fi
 		fi
 
 		[ -n "$domain" ] && echo "search $domain # $interface" > $RESOLV_CONF
