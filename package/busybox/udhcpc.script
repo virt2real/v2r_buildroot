@@ -56,6 +56,11 @@ case "$1" in
 		cat $TMPFILE > $RESOLV_CONF
 		rm -f $TMPFILE
 
+		# prepare miniupnpd and start em
+		if [ -x /etc/virt2real/upnpd_prepare.sh ]; then
+			/etc/virt2real/upnpd_prepare.sh $interface
+		fi
+
 		[ -n "$domain" ] && echo "search $domain # $interface" > $RESOLV_CONF
 		for i in $dns ; do
 			echo adding dns $i
