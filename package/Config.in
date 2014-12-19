@@ -820,8 +820,7 @@ source "package/wvdial/Config.in"
 source "package/xinetd/Config.in"
 source "package/xl2tp/Config.in"
 
-source "package/miniupnpc/Config.in"
-
+source "package/miniupnp/Config.in"
 
 endmenu
 

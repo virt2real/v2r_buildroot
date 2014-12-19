@@ -1,0 +1,30 @@
+#!/bin/sh
+
+start()
+{
+  minissdpd -i br0 -6 -d 2>&1 | logos ssdpd &
+}
+
+stop()
+{
+  pkillwait minissdpd
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0

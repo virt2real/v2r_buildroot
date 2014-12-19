@@ -1,0 +1,13 @@
+config BR2_PACKAGE_MINIUPNP
+	bool "miniupnp utils"
+	help
+	  miniupnpc
+	  Small UPnP client
+
+	  miniupnpd is an IGD and NAT-PMP daemon
+	  miniupnpd requires minissdpd in the runtime, but not to compile
+
+	  minissdpd is an SSDP proxy to allow multiple UPnP programs to share port 1900.
+	  miniupnpd requires it in the runtime.
+
+	  http://miniupnp.free.fr/files/

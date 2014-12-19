@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# manage miniupnpd and minissdpd, the IGD/NAT-DMP daemons
+
+case "$1" in
+  start)
+	miniupnpd -f /etc/miniupnpd.conf -i wlan0 > /dev/null 2>&1
+    ;;
+  stop)
+    killall miniupnpd > /dev/null 2>&1
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|isrunning}"
+    exit 1
+    ;;
+esac
+
+exit 0
