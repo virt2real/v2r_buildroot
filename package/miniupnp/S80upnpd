@@ -4,7 +4,7 @@
 
 case "$1" in
   start)
-	miniupnpd -f /etc/miniupnpd.conf -i wlan0 > /dev/null 2>&1
+	/etc/virt2real/upnpd_prepare.sh wlan0 > /dev/null 2>&1
     ;;
   stop)
     killall miniupnpd > /dev/null 2>&1
