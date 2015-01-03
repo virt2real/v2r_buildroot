@@ -584,4 +584,11 @@ else
 GST_PLUGINS_BAD_CONF_OPT += --disable-rtmp
 endif
 
+ifeq ($(BR2_PACKAGE_GST_PLUGINS_BAD_PLUGIN_ZBAR),y)
+GST_PLUGINS_BAD_CONF_OPT += --enable-zbar
+GST_PLUGINS_BAD_DEPENDENCIES += zbar
+else
+GST_PLUGINS_BAD_CONF_OPT += --disable-zbar
+endif
+
 $(eval $(autotools-package))
