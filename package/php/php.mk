@@ -212,11 +212,11 @@ endif
 
 
 define PHP_INSTALL_FIXUP
-	rm -rf $(TARGET_DIR)/usr/lib/php
-	rm -f $(TARGET_DIR)/usr/bin/phpize
 	mkdir -p $(TARGET_DIR)/usr/bin
 	mkdir -p $(TARGET_DIR)/etc
 	mkdir -p $(TARGET_DIR)/etc/init.d
+	rm -rf $(TARGET_DIR)/usr/lib/php
+	rm -f $(TARGET_DIR)/usr/bin/phpize
 
 	$(INSTALL) -m 0755  package/php/php.ini $(TARGET_DIR)/etc/php.ini
 	$(INSTALL) -D -m 0755 package/php/S45php-cgi $(TARGET_DIR)/etc/init.d/
