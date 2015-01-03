@@ -1,0 +1,4 @@
+config BR2_PACKAGE_ZBAR
+	bool "zbar"
+	help
+	    QR and barcode scanner
