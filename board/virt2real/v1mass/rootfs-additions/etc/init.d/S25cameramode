@@ -10,5 +10,6 @@ fi
 
 if [ ! "$OV5642" == "" ]; then
 	echo "Set OV5642 HD mode"
+	echo 1 > /proc/v2r_gpio/pwctr2
 	i2c_write -a 0x3c -f /etc/cameramodes/ov5642_720p.reg > /dev/null
 fi
