@@ -1,9 +1,9 @@
 #!/bin/sh
 
-WWW_ROOT=/var/www
+WWW_ROOT=/var/www/admin
 THUMB_DIR=$WWW_ROOT/modules/gphotoview/thumbnails
 CAMERA_DIR=/media/camera
-CAMERA_LINK=$WWW_ROOT/modules/gphotofs/camera
+CAMERA_LINK=$WWW_ROOT/modules/usbmediadevices/camera
 
 /etc/virt2real/log "found USB media device"
 

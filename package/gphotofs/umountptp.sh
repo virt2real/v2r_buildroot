@@ -1,6 +1,6 @@
 #!/bin/sh
 
-WWW_ROOT=/var/www
+WWW_ROOT=/var/www/admin
 
 # remove all previews from admin panel
 /etc/virt2real/log "clear all thumbnails for USB media device..."
