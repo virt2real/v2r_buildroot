@@ -194,7 +194,6 @@ $(BUILD_DIR)/%/.stamp_xpackage_installed:
 	@$(call MESSAGE,"Installing to package")
 	-rm -Rf $(TARGET_DIR)
 	mkdir -p $(TARGET_DIR)
-
 	$(if $(BR2_INIT_SYSTEMD),\
 		$($(PKG)_INSTALL_INIT_SYSTEMD))
 
@@ -244,7 +243,7 @@ $(BUILD_DIR)/%/.stamp_xpackage_installed:
 	$(V)echo "" >> $(XPACKAGE_DIR)/Packages
 	
 	# remove package dir
-	#rm -Rf $(TARGET_DIR)
+	rm -Rf $(TARGET_DIR)
 
 
 # Clean package
