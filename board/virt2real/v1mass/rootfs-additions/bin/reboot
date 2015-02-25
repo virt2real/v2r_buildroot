@@ -1,3 +1,4 @@
 #!/bin/sh
+sync
 echo 1 > /dev/watchdog
 /sbin/reboot -f
