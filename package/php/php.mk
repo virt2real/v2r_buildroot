@@ -202,21 +202,11 @@ ifeq ($(BR2_PACKAGE_PHP_EXT_SNMP),y)
 	PHP_DEPENDENCIES += netsnmp
 endif
 
-ifeq ($(BR2_PACKAGE_PHP_EXT_GD),y)
-	PHP_CONF_OPTS += --with-gd --with-jpeg-dir=$(STAGING_DIR)/usr \
-		--with-png-dir=$(STAGING_DIR)/usr \
-		--with-zlib-dir=$(STAGING_DIR)/usr \
-		--with-freetype-dir=$(STAGING_DIR)/usr
-	PHP_DEPENDENCIES += jpeg libpng freetype
-endif
-
-
 define PHP_INSTALL_FIXUP
-	mkdir -p $(TARGET_DIR)/usr/bin
-	mkdir -p $(TARGET_DIR)/etc
-	mkdir -p $(TARGET_DIR)/etc/init.d
 	rm -rf $(TARGET_DIR)/usr/lib/php
 	rm -f $(TARGET_DIR)/usr/bin/phpize
+	mkdir -p $(TARGET_DIR)/etc
+	mkdir -p $(TARGET_DIR)/etc/init.d
 
 	$(INSTALL) -m 0755  package/php/php.ini $(TARGET_DIR)/etc/php.ini
 	$(INSTALL) -D -m 0755 package/php/S45php-cgi $(TARGET_DIR)/etc/init.d/
