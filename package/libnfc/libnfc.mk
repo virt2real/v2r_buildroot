@@ -55,8 +55,8 @@ define LIBNFC_INSTALL_TARGET_CMDS
 	$(INSTALL) -D -m 0755 $(@D)/libnfc/libnfc.la $(TARGET_DIR)/usr/lib
 	$(INSTALL) -D -m 0644 $(@D)/libnfc/.libs/libnfc.a $(TARGET_DIR)/usr/lib
 	$(INSTALL) -D -m 0755 $(@D)/libnfc/.libs/libnfc.so.5.0.0 $(TARGET_DIR)/usr/lib
-	mv $(@D)/libnfc/.libs/libnfc.so.5 $(TARGET_DIR)/usr/lib/
-	mv $(@D)/libnfc/.libs/libnfc.so $(TARGET_DIR)/usr/lib/
+	#mv $(@D)/libnfc/.libs/libnfc.so.5 $(TARGET_DIR)/usr/lib/
+	#mv $(@D)/libnfc/.libs/libnfc.so $(TARGET_DIR)/usr/lib/
 
 	mkdir -p $(TARGET_DIR)/usr/lib/pkgconfig
 	$(INSTALL) -D -m 0644 $(@D)/libnfc.pc $(TARGET_DIR)/usr/lib/pkgconfig
