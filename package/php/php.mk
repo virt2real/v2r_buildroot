@@ -205,6 +205,7 @@ endif
 define PHP_INSTALL_FIXUP
 	rm -rf $(TARGET_DIR)/usr/lib/php
 	rm -f $(TARGET_DIR)/usr/bin/phpize
+	mkdir -p $(TARGET_DIR)/usr/bin
 	mkdir -p $(TARGET_DIR)/etc
 	mkdir -p $(TARGET_DIR)/etc/init.d
 
