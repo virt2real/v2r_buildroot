@@ -134,6 +134,11 @@ config BR2_PACKAGE_UTIL_LINUX_SCHEDUTILS
 	help
 	  Scheduling utilities (chrt, ionice, taskset)
 
+config BR2_PACKAGE_UTIL_LINUX_SFDISK
+	bool "sfdisk"
+	help
+	  Partition table manipulator for Linux
+
 config BR2_PACKAGE_UTIL_LINUX_SWITCH_ROOT
 	bool "switch_root"
 	help
