@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -eu
+
+Usage() {
+	echo "usage: $0 <package-file>"
+	exit 1
+}
+
+[ $# -eq 1 ] || Usage
+
+SELF_DIR="${0%/*}"
+[ "$SELF_DIR" = "$0" ] && SELF_DIR=.
+SELF_DIR=$(cd "$SELF_DIR" && pwd)
+ROOT_DIR=$(cd "$SELF_DIR/../../../" && pwd)
+
+PACKAGE="$1"
+VIDEOSERVERD_CTL="$SELF_DIR/videoserverd_ctl"
+VIDEOSERVER_CONFIG_FILE="$SELF_DIR/videoserverd.config"
+
+if [ -e "$SELF_DIR/setup_env" ]; then
+	source "$SELF_DIR/setup_env"
+fi
+
+VIDEOSERVER_CONFIG_BACKUP="${VIDEOSERVER_CONFIG_FILE}.backup"
+
+if [ -e "$VIDEOSERVERD_CTL" ]; then
+	$VIDEOSERVERD_CTL stop || true
+fi
+
+if [ -e "$VIDEOSERVER_CONFIG_FILE" ]; then
+	mv "$VIDEOSERVER_CONFIG_FILE" "$VIDEOSERVER_CONFIG_BACKUP"
+fi
+
+tar -C "$ROOT_DIR" -xzvf "$PACKAGE"
+
+if [ -e "$VIDEOSERVER_CONFIG_BACKUP" ]; then
+	mv "$VIDEOSERVER_CONFIG_BACKUP" "$VIDEOSERVER_CONFIG_FILE"
+fi

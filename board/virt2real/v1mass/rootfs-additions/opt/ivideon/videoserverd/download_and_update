@@ -1,0 +1,25 @@
+#!/bin/sh
+
+VIDEOSERVER_UPDATE_URL=
+
+cd "${0%/*}"
+SCRIPT_DIR=$(pwd)
+
+if [ -e "./setup_env" ]; then
+	. "./setup_env"
+fi
+
+if [ $# -ge 1 ]; then
+	VIDEOSERVER_UPDATE_URL="$1"
+fi
+
+if [ -z "$VIDEOSERVER_UPDATE_URL" ]; then
+	echo "usage: $0 <URL>"
+	exit 1
+fi
+
+
+cd /tmp
+wget -O video_server.tgz "$VIDEOSERVER_UPDATE_URL"
+$SCRIPT_DIR/update video_server.tgz
+rm -f video_server.tgz

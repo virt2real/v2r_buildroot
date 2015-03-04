@@ -1,0 +1,23 @@
+#!/bin/sh
+
+case "$1" in
+start)
+    echo "Starting Ivideon server..."
+	sleep 1
+    /opt/ivideon/videoserverd/videoserverd_ctl start > /dev/null &
+	echo "Ivideon" > /tmp/onair
+    ;;
+
+stop)
+    echo "Stopping Ivideon server..."
+	sleep 1
+    /opt/ivideon/videoserverd/videoserverd_ctl stop > /dev/null &
+	echo "" > /tmp/onair
+    ;;
+
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+    ;;
+esac
+

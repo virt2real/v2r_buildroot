@@ -1,0 +1,167 @@
+#!/bin/sh
+# 
+# Start and stop Ivideon Video Server.
+
+# Directory where Ivivdeon Server files is installed.
+VIDEOSERVER_DIR="/opt/ivideon/videoserverd"
+
+if [ ! -e "$VIDEOSERVER_DIR" ]; then
+	VIDEOSERVER_DIR="${0%/*}"
+	[ "$VIDEOSERVER_DIR" = "$0" ] && VIDEOSERVER_DIR=.
+	VIDEOSERVER_DIR=$(cd "$VIDEOSERVER_DIR" && pwd)
+fi
+
+# Script to generate videoserver configuration file (optional). 
+# The script is called (if exists) whenever the server starts.
+SETUP_CONFIG_SCRIPT="$VIDEOSERVER_DIR/setup_config"
+
+# Setup environment variables (optional).
+SETUP_ENV_SCRIPT="$VIDEOSERVER_DIR/setup_env"
+
+# Path to Ivideon Server configuration file.
+VIDEOSERVER_CONFIG_FILE="$VIDEOSERVER_DIR/videoserverd.config"
+
+# Directory where videoserver PID file will be created.
+PID_FILE_DIR=/var/run
+
+VIDEOSERVER_NAME="videoserverd"
+VIDEOSERVER="$VIDEOSERVER_DIR/$VIDEOSERVER_NAME"
+VIDEOSERVER_DESC="Ivideon Video Server"
+PID_FILE="${PID_FILE_DIR}/${VIDEOSERVER_NAME}.pid"
+AUTO_RESPAWN="$VIDEOSERVER_DIR/auto_respawn"
+JSON_EDIT="$VIDEOSERVER_DIR/json_edit"
+VIDEOSERVER_WD=
+
+if [ -e "$SETUP_ENV_SCRIPT" ]; then
+	. "$SETUP_ENV_SCRIPT"
+fi
+
+if [ -z "$VIDEOSERVER_WD" ]; then
+	VIDEOSERVER_WD="$VIDEOSERVER_DIR"
+fi
+
+CheckVideoServer() {
+	$AUTO_RESPAWN --test-alive --pid-file "$PID_FILE"
+	return $?
+}
+
+# $1 -- forceFlag
+Start() {
+	if CheckVideoServer ; then
+		echo "${VIDEOSERVER_DESC} is already started!"
+		return 0
+	fi
+
+	echo "Starting ${VIDEOSERVER_DESC}..."
+
+	if [ -x "$SETUP_CONFIG_SCRIPT" ] ; then
+		if ! "$SETUP_CONFIG_SCRIPT" ; then
+			echo "Failed to setup configuration!" 1>&2
+			if [ "$1" -eq 0 ]; then
+				echo "Use 'force-start' or 'force-restart' option to start video server anyway."
+				return 1
+			fi
+		fi
+	fi
+
+	$AUTO_RESPAWN --daemon --pid-file "$PID_FILE" --cwd "$VIDEOSERVER_WD" -- "$VIDEOSERVER" --config-filename "$VIDEOSERVER_CONFIG_FILE"
+
+	sleep 1
+	CheckVideoServer
+	status=$?
+	case $status in
+		0)
+			echo "${VIDEOSERVER_DESC} was successfully started"
+			;;
+		*)
+			echo "${VIDEOSERVER_DESC} was not started!" 1>&2
+			;;
+	esac
+
+	return $?
+}
+
+Stop() {
+	echo "Stopping ${VIDEOSERVER_DESC}..."
+	$AUTO_RESPAWN --stop 20 --pid-file "$PID_FILE"
+	status=$?
+	case $status in
+		0)
+			echo "${VIDEOSERVER_DESC} was successfully stopped"
+			;;
+		1)
+			echo "${VIDEOSERVER_DESC} was killed by SIGKILL"
+			;;
+		*)
+			echo "Failed to stop ${VIDEOSERVER_DESC}!" 1>&2
+			;;
+	esac
+
+	return $status
+}
+
+# $1 -- forceFlag
+Restart() {
+	Stop
+	if [ "$?" -le 1 ]; then
+		Start "$1"
+	fi
+	
+	return $?
+}
+
+Status() {
+	CheckVideoServer
+	status=$?
+	case $status in
+		0)
+			echo "${VIDEOSERVER_DESC} is started"
+			;;
+		1)
+			echo "${VIDEOSERVER_DESC} is stopped"
+			;;
+		*)
+			echo "Failed to check ${VIDEOSERVER_DESC} status!" 1>&2
+			;;
+	esac
+
+	return $status
+}
+
+Version() {
+	"$VIDEOSERVER" --version
+}
+
+Usage() {
+	echo "Usage: videoserverd_ctl start|force-start|stop|restart|force-restart|status|version"
+	return 3
+}
+
+case "$1" in
+	start)
+		Start 0
+		;;
+	force-start)
+		Start 1
+		;;
+	stop)
+		Stop
+		;;
+	restart)
+		Restart 0
+		;;
+	force-restart)
+		Restart 1
+		;;
+	status)
+		Status
+		;;
+	version)
+		Version
+		;;
+	*)
+		Usage
+		;;
+esac
+
+exit $?
