@@ -2,6 +2,7 @@
 
 OV2643=`cat /proc/cmdline | grep " camera=ov2643"`
 OV5642=`cat /proc/cmdline | grep " camera=ov5642"`
+OV5640=`cat /proc/cmdline | grep " camera=ov5640"`
 
 if [ ! "$OV2643" == "" ]; then
 	echo "Set OV2643 YCBCR HD mode"
@@ -13,4 +14,12 @@ if [ ! "$OV5642" == "" ]; then
 	echo 1 > /proc/v2r_gpio/pwctr2
 	sleep 1
 	/usr/bin/i2c_write -a 0x3c -f /etc/cameramodes/ov5642_720p.reg > /dev/null
+fi
+
+if [ ! "$OV5640" == "" ]; then
+	echo "Set OV5640 HD mode"
+	/usr/bin/i2c_write -a 0x3c -f /etc/cameramodes/ov5640_720p.reg > /dev/null
+	/usr/bin/i2c_write -a 0x3c -f /etc/cameramodes/ov5640_reset.reg > /dev/null
+	/usr/bin/i2c_write -a 0x3c -f /etc/cameramodes/ov5640_af.reg -r 0x8000 > /dev/null
+	/usr/bin/i2c_write -a 0x3c -f /etc/cameramodes/ov5640_af_start.reg > /dev/null
 fi
