@@ -1,9 +1,12 @@
-#!/bin/sh
+#!/bin/sh -e
 
 case "$1" in
 start)
+
+	KERNELVERSION=`uname -r`
+
 	echo "Loading coprocessors modules..."
-	if [ -f /lib/modules/`uname -r`/kernel/drivers/dsp/cmemk.ko ] ; then
+	if [ -f /lib/modules/$KERNELVERSION/kernel/drivers/dsp/cmemk.ko ] ; then
 	    PHYS_START=
 	    if [ -z "$PHYS_START" ] ; then
 	        RESERVED_START=$(( `sed -e "s/.*mem=\([0-9]*\)M .*/\1 * 1024 * 1024/" /proc/cmdline` ))
@@ -13,26 +16,28 @@ start)
 	        VIDEO_CAPTURE_BUFFERS_SIZE=$(( `( grep -q re.cont /proc/cmdline && sed -e 's/.*e.cont_bufsize=\([0-9]*\) .*/+ \1/' /proc/cmdline ) || echo 0` ))
 	        PHYS_START=`printf '0x%x' $(( 0x80000000 + $RESERVED_START + $VIDEO_DISPLAY_BUFFERS_SIZE + $VIDEO_CAPTURE_BUFFERS_SIZE ))`
 	    fi
-	    PHYS_END=`printf '0x%x' $(($PHYS_START + 0xF00000))`
-	    PHYS_END_INT=`printf '%d' $(($PHYS_START + 0xF00000))`
+	    PHYS_END=`printf '0x%x' $(($PHYS_START + 0x1271680))`
+	    PHYS_END_INT=`printf '%d' $(($PHYS_START + 0x1271680))`
 	    if [ $PHYS_END_INT -gt 2281701376 ] ; then
 		echo "WARNING: the cmem allocation ends beyond the end of RAM registered for this hardware"
 		echo "End of cmem: $PHYS_END, End of ram: 0x88000000 \n"
 	    fi
-	    #rmmod cmemk 2>/dev/null || true
-	    #rm -f /dev/cmem
+	    rmmod cmemk 2>/dev/null || true
+	    rm -f /dev/cmem
+
 	    echo "  Loading cmem from $PHYS_START to $PHYS_END"
 	    modprobe cmemk phys_start=$PHYS_START phys_end=$PHYS_END allowOverlap=1 useHeapIfPoolUnavailable=1 allowOverlap=1 phys_start_1=0x00001000 phys_end_1=0x00008000 pools_1=1x28672
+
 	fi
-	if [ -f /lib/modules/`uname -r`/kernel/drivers/dsp/dm365mmap.ko ] ; then
-	    #rmmod dm365mmap 2>/dev/null || true
+	if [ -f /lib/modules/$KERNELVERSION/kernel/drivers/dsp/dm365mmap.ko ] ; then
+	    rmmod dm365mmap 2>/dev/null || true
 	    modprobe dm365mmap
 	    # For some reason this driver doesn't triger udev/mdev to build the device
 	    rm -f /dev/dm365mmap
 	    mknod /dev/dm365mmap c `awk '$2  ~ /dm365mmap/ {print $1}' /proc/devices` 0
 	fi
-	if [ -f /lib/modules/`uname -r`/kernel/drivers/dsp/edmak.ko ] ; then
-	    #rmmod edmak 2>/dev/null || true
+	if [ -f /lib/modules/$KERNELVERSION/kernel/drivers/dsp/edmak.ko ] ; then
+	    rmmod edmak 2>/dev/null || true
 	    modprobe edmak
 	fi
 
@@ -51,7 +56,7 @@ start)
 		echo "Loading irqk"
 		modprobe irqk
 	fi
-
+	
 	;;
 
 stop)
@@ -68,13 +73,10 @@ stop)
 	if lsmod | grep -q irqk ; then
 	    rmmod irqk || true
 	fi
-	if lsmod | grep -q irqk_hdmi ; then
-	    rmmod irqk_hdmi || true
-	fi
 	;;
 
 *)
-	echo "Usage: /etc/init.d/S30modules {start|stop}"
+	echo "Usage: /etc/init.d/coprocessors {start|stop}"
 	exit 1
 	;;
 esac
