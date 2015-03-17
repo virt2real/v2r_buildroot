@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh
 
 case "$1" in
 start)
@@ -43,7 +43,7 @@ start)
 
 	# detect HDMI input
 	/usr/bin/i2c_check -a 0x22 > /dev/null
-	if [ "$?" = "0" ] ; then
+	if [ "$?" == "0" ] ; then
 		/usr/bin/i2c_check -a 0x4c > /dev/null
 		if [ "$?" = "0" ] ; then
 			echo "Loading irqk for HDMI input"
