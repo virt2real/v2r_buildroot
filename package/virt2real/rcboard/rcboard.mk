@@ -6,6 +6,7 @@
 
 RCBOARD_VERSION = HEAD
 RCBOARD_SITE = http://github.com/virt2real/rcboard/tarball/$(RCBOARD_VERSION)
+RCBOARD_DEPENDENCIES = libconfuse libcurl
 
 define RCBOARD_BUILD_CMDS
         $(MAKE) -C $(@D)/board CC="$(TARGET_CC) $(TARGET_CFLAGS)"
