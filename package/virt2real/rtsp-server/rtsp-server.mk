@@ -6,6 +6,7 @@
 
 RTSP_SERVER_VERSION = HEAD
 RTSP_SERVER_SITE = http://github.com/virt2real/othersoft/tarball/$(RTSP_SERVER_VERSION)
+RTSP_SERVER_DEPENDENCIES = gst-rtsp-server
 
 define RTSP_SERVER_BUILD_CMDS
         $(MAKE) -C $(@D)/rtsp-server CC="$(TARGET_CC) $(TARGET_CFLAGS)"
