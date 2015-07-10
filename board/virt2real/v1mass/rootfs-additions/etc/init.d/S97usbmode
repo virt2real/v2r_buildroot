@@ -1,0 +1,12 @@
+#!/bin/sh
+# check USB mode and run scripts for current mode
+USBMODE=`cat /sys/devices/platform/musb-davinci/musb-hdrc.0.auto/driver/musb-hdrc.0.auto/mode`
+if [ "$USBMODE" == "a_host" ]  ; then
+	# host mode
+	/etc/virt2real/usb_host.sh
+else 
+	if [ "$USBMODE" == "b_peripheral" ]  ; then
+		# client mode
+		/etc/virt2real/usb_client.sh
+	fi
+fi
