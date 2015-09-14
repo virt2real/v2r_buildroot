@@ -927,7 +927,7 @@ BR2_PACKAGE_NODEJS=y
 BR2_PACKAGE_NODEJS_NPM=y
 # BR2_PACKAGE_NODEJS_MODULES_EXPRESS is not set
 BR2_PACKAGE_NODEJS_MODULES_COFFEESCRIPT=y
-BR2_PACKAGE_NODEJS_MODULES_ADDITIONAL="ws serialport nmea i2c gphoto2 dbus-native src-ioctl socket.io socket.io-client mysql event-stream"
+BR2_PACKAGE_NODEJS_MODULES_ADDITIONAL="ws serialport nmea i2c@0.1.8 gphoto2 dbus-native src-ioctl socket.io socket.io-client mysql event-stream"
 BR2_PACKAGE_NODEJS_MODULES_ADDITIONAL_DEPS=""
 # BR2_PACKAGE_PERL is not set
 BR2_PACKAGE_PHP=y
