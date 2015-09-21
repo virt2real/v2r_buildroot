@@ -26,7 +26,7 @@ red)
         echo "set red $VALUE"
 	;;
 blue)
-        echo "set rto 3 $VALUE" > /dev/v2r_gpio
         echo "set blue $VALUE"
-	;;
+        echo $VALUE > /proc/v2r_gpio/pwctr3
+        ;;
 esac
