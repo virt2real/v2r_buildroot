@@ -41,21 +41,8 @@ start)
 	    modprobe edmak
 	fi
 
-	# detect HDMI input
-	/usr/bin/i2c_check -a 0x22 > /dev/null
-	if [ "$?" == "0" ] ; then
-		/usr/bin/i2c_check -a 0x4c > /dev/null
-		if [ "$?" = "0" ] ; then
-			echo "Loading irqk for HDMI input"
-			modprobe irqk_hdmi
-		else
-			echo "Loading irqk"
-			modprobe irqk
-		fi
-	else
-		echo "Loading irqk"
-		modprobe irqk
-	fi
+	echo "Loading irqk"
+	modprobe irqk
 	
 	;;
 
