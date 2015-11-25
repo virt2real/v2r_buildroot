@@ -5,8 +5,11 @@
 
 case "$1" in
   start)
- 	echo "Starting network..."
-	/sbin/ifup -a -f
+ 	#echo "Starting network..."
+	#/sbin/ifup -a -f
+
+ 	echo "Starting network async..."
+	/sbin/ifup -a -f 2>&1 > /dev/null &
 	;;
   stop)
 	echo -n "Stopping network..."
